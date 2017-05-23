@@ -18,7 +18,7 @@
 		<!-- 导入左边菜单项 -->
 		<jsp:include page="/WEB-INF/pages/plugins/back/include_menu_item.jsp">
 			<jsp:param name="mi" value="2"/>
-			<jsp:param name="msi" value="23"/>
+			<jsp:param name="msi" value="22"/> 
 		</jsp:include>
 		<div class="content-wrapper text-left">
 			<div class="panel panel-success">
