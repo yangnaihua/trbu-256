@@ -3,7 +3,26 @@ package cn.mldn.travel.service.back;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+
+import cn.mldn.travel.vo.Emp;
+
 public interface IEmpServiceBack {
+	/**
+	 * 查看一个雇员的完整信息，包括雇员的基本信息以及所在部门信息
+	 * @param eid 雇员编号
+	 * @return 返回的信息包含有如下内容：<br>
+	 * 1、key = emp、value = 雇员的详细信息；<br>
+	 * 2、key = dept、value = 部门的详细信息；<br>
+	 * 3、key = level、value = 雇员级别信息；<br>
+	 */
+	@RequiresRoles(value = { "emp", "empshow" }, logical = Logical.OR)
+	@RequiresPermissions(value = { "emp:edit", "empshow:get" }, logical = Logical.OR)
+	public Map<String,Object> getDetails(String eid) ;
+	
+	
 	/**
 	 * 根据雇员id获得雇员完整信息
 	 * @param eid 雇员编号
