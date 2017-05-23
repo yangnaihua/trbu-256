@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -26,6 +27,15 @@ import cn.mldn.util.action.abs.AbstractBaseAction;
 public class DeptActionBack extends AbstractBaseAction {
 	@Resource
 	private IDeptServiceBack deptServiceBack ;
+	
+	@RequestMapping("mgr")
+	@RequiresRoles(value = {"emp"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"dept:edit","emp:edit"}, logical = Logical.AND)
+	public ModelAndView editMgr(HttpServletResponse response,Long did) {
+		super.print(response,
+				this.deptServiceBack.editLevel(did, super.getEid()));
+		return null;
+	}
 	
 	@RequestMapping("edit")
 	@RequiresUser

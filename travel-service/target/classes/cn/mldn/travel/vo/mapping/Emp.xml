@@ -10,5 +10,8 @@
 		SELECT eid,did,ename
 		FROM emp WHERE eid IN (
 			SELECT eid FROM dept) ;
-	</select> 
+	</select>
+	<update id="doUpdateLevel" parameterType="Emp">
+		UPDATE emp SET lid=#{lid},ineid=#{ineid} WHERE eid=#{eid}
+	</update> 
 </mapper>
