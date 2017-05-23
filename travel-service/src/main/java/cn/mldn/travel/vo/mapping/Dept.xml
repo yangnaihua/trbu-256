@@ -5,4 +5,10 @@
 	<select id="findAll" resultType="Dept">
 		SELECT did,dname,eid FROM dept ;
 	</select> 
+	<select id="findById" resultType="Dept" parameterType="long">
+		SELECT did,dname,eid FROM dept WHERE did=#{did} ;
+	</select>
+	<update id="doUpdate" parameterType="Dept">
+		UPDATE dept SET dname=#{dname} WHERE did=#{did}
+	</update> 
 </mapper>

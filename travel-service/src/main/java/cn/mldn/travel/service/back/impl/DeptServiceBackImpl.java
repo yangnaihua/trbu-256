@@ -11,6 +11,7 @@ import cn.mldn.travel.dao.IDeptDAO;
 import cn.mldn.travel.dao.IEmpDAO;
 import cn.mldn.travel.service.back.IDeptServiceBack;
 import cn.mldn.travel.service.back.abs.AbstractService;
+import cn.mldn.travel.vo.Dept;
 @Service
 public class DeptServiceBackImpl extends AbstractService
 		implements
@@ -19,6 +20,11 @@ public class DeptServiceBackImpl extends AbstractService
 	private IDeptDAO deptDAO;
 	@Resource
 	private IEmpDAO empDAO;
+	
+	@Override
+	public boolean edit(Dept vo) {
+		return this.deptDAO.doUpdate(vo);
+	} 
 
 	@Override
 	public Map<String, Object> list() {

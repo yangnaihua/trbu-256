@@ -1,5 +1,8 @@
 package cn.mldn.travel.action.back;
 
+import java.util.Map;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,13 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.mldn.travel.service.back.IEmpServiceBack;
 import cn.mldn.travel.vo.Emp;
 import cn.mldn.util.action.abs.AbstractBaseAction;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/pages/back/admin/emp/*")
 public class EmpActionBack extends AbstractBaseAction {
 	private static final String FLAG = "雇员";
+	
+	@Resource
+	private IEmpServiceBack empServiceBack ;
 
 	@RequestMapping("add_pre")
 	@RequiresUser
@@ -64,10 +72,15 @@ public class EmpActionBack extends AbstractBaseAction {
 
 	@RequestMapping("get")
 	@RequiresUser
-	@RequiresRoles({ "emp", "empshow" })
-	@RequiresPermissions({ "emp:get", "empshow:get" })
+	@RequiresRoles(value={ "emp", "empshow" }, logical = Logical.OR)
+	@RequiresPermissions(value={ "emp:get", "empshow:get" }, logical = Logical.OR)
 	public ModelAndView get(String eid, HttpServletResponse response) {
-		super.print(response, null);
+		Map<String,Object> map = this.empServiceBack.getDetails(eid) ;
+		JSONObject obj = new JSONObject() ;
+		obj.put("emp", map.get("emp")) ;
+		obj.put("dept", map.get("dept")) ;
+		obj.put("level", map.get("level")) ;
+		super.print(response, obj);
 		return null;
 	}
 
