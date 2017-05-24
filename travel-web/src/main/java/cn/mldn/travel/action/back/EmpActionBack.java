@@ -37,12 +37,12 @@ public class EmpActionBack extends AbstractBaseAction {
 
 	@Resource
 	private IEmpServiceBack empServiceBack;
-	
+
 	@RequestMapping("add_check")
 	@RequiresUser
 	@RequiresRoles("emp")
 	@RequiresPermissions("emp:add")
-	public ModelAndView check(HttpServletResponse response,String eid) {
+	public ModelAndView check(HttpServletResponse response, String eid) {
 		super.print(response, this.empServiceBack.getEid(eid) == null);
 		return null;
 	}
@@ -74,13 +74,13 @@ public class EmpActionBack extends AbstractBaseAction {
 		try {
 			if (this.empServiceBack.add(vo)) {
 				if (fileUtil != null) { // 准备上传文件
-					fileUtil.saveFile(request, "upload/member/",
-							vo.getPhoto());
+					fileUtil.saveFile(request, "upload/member/", vo.getPhoto());
 				}
 				super.setUrlAndMsg(request, "emp.add.action", "vo.add.success",
 						FLAG);
 			} else {
-				super.setUrlAndMsg(request, "emp.add.action", "vo.add.failure", FLAG);
+				super.setUrlAndMsg(request, "emp.add.action", "vo.add.failure",
+						FLAG);
 			}
 		} catch (DeptManagerExistException e) { // emp.add.dept.mgr.failure
 			super.setUrlAndMsg(request, "emp.add.action",
@@ -108,35 +108,35 @@ public class EmpActionBack extends AbstractBaseAction {
 		ModelAndView mav = new ModelAndView(super.getUrl("back.forward.page"));
 		FileUtils fileUtil = null;
 		vo.setIneid(super.getEid()); // 通过Session取得当前操作者的雇员编号
-		if (!(vo.getPassword() == null || "".equals(vo.getPassword()))) {	// 要修改密码
+		if (!(vo.getPassword() == null || "".equals(vo.getPassword()))) { // 要修改密码
 			vo.setPassword(PasswordUtil.getPassword(vo.getPassword())); // 密码加密处理
 		} else {
 			vo.setPassword(null); // “”字符串问题
 		}
 		if (!pic.isEmpty()) { // 如果说现在文件有上传
 			fileUtil = new FileUtils(pic);
-			if ("nophoto.png".equals(vo.getPhoto())) {	// 原始没有图片名称
+			if ("nophoto.png".equals(vo.getPhoto())) { // 原始没有图片名称
 				vo.setPhoto(fileUtil.createFileName()); // 把生成的文件名称保存在VO类之中
 			}
 		}
 		try {
 			if (this.empServiceBack.edit(vo)) {
 				if (fileUtil != null) { // 准备上传文件
-					fileUtil.saveFile(request, "upload/member/",
-							vo.getPhoto());
+					fileUtil.saveFile(request, "upload/member/", vo.getPhoto());
 				}
-				super.setUrlAndMsg(request, "emp.list.action", "vo.edit.success",
-						FLAG);
+				super.setUrlAndMsg(request, "emp.list.action",
+						"vo.edit.success", FLAG);
 			} else {
-				super.setUrlAndMsg(request, "emp.list.action", "vo.edit.failure", FLAG);
+				super.setUrlAndMsg(request, "emp.list.action",
+						"vo.edit.failure", FLAG);
 			}
 		} catch (DeptManagerExistException e) { // emp.add.dept.mgr.failure
 			super.setUrlAndMsg(request, "emp.list.action",
 					"emp.add.dept.mgr.failure");
-		}  catch (LevelNotEnoughException e) { // level.not.enough.failure
+		} catch (LevelNotEnoughException e) { // level.not.enough.failure
 			super.setUrlAndMsg(request, "emp.list.action",
 					"level.not.enough.failure");
-		} 
+		}
 		return mav;
 	}
 
@@ -163,27 +163,28 @@ public class EmpActionBack extends AbstractBaseAction {
 	public ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(super.getUrl("emp.list.page"));
 		ActionSplitPageUtil aspu = new ActionSplitPageUtil(request,
-				"雇员编号:eid|雇员姓名:ename|联系电话:phone", super.getMsg("emp.list.action"));
+				"雇员编号:eid|雇员姓名:ename|联系电话:phone",
+				super.getMsg("emp.list.action"));
 		Map<String, Object> map = this.empServiceBack.list(
 				aspu.getCurrentPage(), aspu.getLineSize(), aspu.getColumn(),
 				aspu.getKeyWord());
-		mav.addAllObjects(map) ;	// 把内容交给request属性范围
-		List<Dept> allDepts = (List<Dept>) map.get("allDepts") ;
-		List<Level> allLevels = (List<Level>) map.get("allLevels") ;
-		Map<Long,String> deptMap = new HashMap<Long,String>() ;
-		Iterator<Dept> iter = allDepts.iterator() ;
+		mav.addAllObjects(map); // 把内容交给request属性范围
+		List<Dept> allDepts = (List<Dept>) map.get("allDepts");
+		List<Level> allLevels = (List<Level>) map.get("allLevels");
+		Map<Long, String> deptMap = new HashMap<Long, String>();
+		Iterator<Dept> iter = allDepts.iterator();
 		while (iter.hasNext()) {
-			Dept dept = iter.next() ;
-			deptMap.put(dept.getDid(), dept.getDname()) ;
+			Dept dept = iter.next();
+			deptMap.put(dept.getDid(), dept.getDname());
 		}
-		Map<String,String> levelMap = new HashMap<String,String>() ;
-		Iterator<Level> iter2 = allLevels.iterator() ;
+		Map<String, String> levelMap = new HashMap<String, String>();
+		Iterator<Level> iter2 = allLevels.iterator();
 		while (iter2.hasNext()) {
-			Level lev = iter2.next() ;
-			levelMap.put(lev.getLid(), lev.getTitle()) ;
+			Level lev = iter2.next();
+			levelMap.put(lev.getLid(), lev.getTitle());
 		}
-		mav.addObject("allDepts", deptMap) ;	// 属性名称一样会出现覆盖
-		mav.addObject("allLevels", levelMap) ;	// 属性名称一样会出现覆盖
+		mav.addObject("allDepts", deptMap); // 属性名称一样会出现覆盖
+		mav.addObject("allLevels", levelMap); // 属性名称一样会出现覆盖
 		return mav;
 	}
 
@@ -193,10 +194,13 @@ public class EmpActionBack extends AbstractBaseAction {
 	@RequiresPermissions("emp:delete")
 	public ModelAndView delete(String ids, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(super.getUrl("back.forward.page"));
-		// super.setUrlAndMsg(request, "emp.list.action", "vo.delete.failure",
-		// FLAG);
-		super.setUrlAndMsg(request, "emp.list.action", "vo.delete.success",
-				FLAG);
+		if (this.empServiceBack.delete(super.handleStringIds(ids),super.getEid())) {
+			super.setUrlAndMsg(request, "emp.list.action", "vo.delete.success",
+					FLAG);
+		} else {
+			super.setUrlAndMsg(request, "emp.list.action", "vo.delete.failure",
+					FLAG);
+		}
 		return mav;
 	}
 }

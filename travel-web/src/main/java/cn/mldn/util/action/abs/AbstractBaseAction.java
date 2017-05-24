@@ -1,6 +1,8 @@
 package cn.mldn.util.action.abs;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,24 @@ import org.springframework.context.MessageSource;
 public abstract class AbstractBaseAction {
 	@Resource
 	private MessageSource messageSource;
+	
+	public Set<String> handleStringIds(String ids) {
+		Set<String> set = new HashSet<String>() ;
+		String result [] = ids.split(",") ;
+		for (int x = 0 ; x < result.length ; x ++) {
+			set.add(result[x]) ;
+		}
+		return set ;
+	}
+	
+	public Set<Long> handleLongIds(String ids) {
+		Set<Long> set = new HashSet<Long>() ;
+		String result [] = ids.split(",") ;
+		for (int x = 0 ; x < result.length ; x ++) {
+			set.add(Long.parseLong(result[x])) ;
+		}
+		return set ;
+	}
 	
 	public String getEid() {
 		return SecurityUtils.getSubject().getPrincipal().toString() ;

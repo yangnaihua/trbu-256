@@ -13,6 +13,18 @@ import cn.mldn.travel.vo.Emp;
 
 public interface IEmpServiceBack {
 	/**
+	 * 进行雇员信息的删除处理，该删除操作要执行如下步骤：
+	 * 1、首先要求依次判断所有要删除的员工数据是否具备有领导级别的信息，如果存在有领导级别的信息则要求员工先进行降级，而后再更新部门领导；
+	 * 2、每一次的更新只需要调用doUpdateLocked()方法就可以进行标志位的操作处理
+	 * @param eids 要更新的全部雇员编号
+	 * @param heid 要操作此功能的当前雇员编号
+	 * @return 删除成功返回true
+	 */
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:delete")
+	public boolean delete(Set<String> eids,String heid) ;
+	
+	/**
 	 * 实现雇员信息的追加，该方法要执行如下的操作：<br>
 	 * 1、随后根据增加雇员级别，来判断所在的部门情况，如果是该部门已经存在有经理，那么将无法进行保存，应该抛出异常；<br>
 	 * 2、判断当前操作者的级别是否为经理，如果为经理才可以进行经理相关处理；<br>
