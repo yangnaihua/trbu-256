@@ -3,6 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.IEmpDAO">
 	
+	<update id="doUpdate" parameterType="Emp">
+		UPDATE emp SET lid=#{lid},did=#{did},ename=#{ename},sal=#{sal},phone=#{phone},note=#{note},ineid=#{ineid}
+		<if test="password != null">
+			,password=#{password}
+		</if>
+		<where>
+			eid=#{eid}
+		</where>
+	</update> 
+	
 	<select id="getAllCount" resultType="long" parameterType="map">
 		SELECT COUNT(*) FROM emp 
 		<where>
@@ -20,6 +30,7 @@
 				${column} LIKE #{keyWord}
 			</if>
 		</where>
+		ORDER BY hiredate DESC ,did
 		LIMIT #{start},#{lineSize}
 	</select>
 

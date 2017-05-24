@@ -55,8 +55,10 @@
 								<td class="text-center">${emp.sal}</td>
 								<td class="text-center">${emp.phone}</td>
 								<td class="text-center">
-									<a type="button" class="btn btn-warning btn-xs" href="<%=EMP_EDIT_URL%>?eid=${emp.eid}">
+									<c:if test="${emp.lid != 'chief'}">
+										<a type="button" class="btn btn-warning btn-xs" href="<%=EMP_EDIT_URL%>?eid=${emp.eid}">
 											<span class="glyphicon glyphicon-edit"></span>&nbsp;编辑</a>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

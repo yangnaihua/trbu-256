@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.mldn.travel.exception.DeptManagerExistException;
+import cn.mldn.travel.exception.LevelNotEnoughException;
 import cn.mldn.travel.service.back.IEmpServiceBack;
 import cn.mldn.travel.vo.Dept;
 import cn.mldn.travel.vo.Emp;
@@ -94,6 +95,7 @@ public class EmpActionBack extends AbstractBaseAction {
 	@RequiresPermissions("emp:edit")
 	public ModelAndView editPre(String eid) {
 		ModelAndView mav = new ModelAndView(super.getUrl("emp.edit.page"));
+		mav.addAllObjects(this.empServiceBack.getEditPre(eid));
 		return mav;
 	}
 
@@ -104,9 +106,37 @@ public class EmpActionBack extends AbstractBaseAction {
 	public ModelAndView edit(Emp vo, MultipartFile pic,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(super.getUrl("back.forward.page"));
-		// super.setUrlAndMsg(request, "emp.list.action", "vo.edit.failure",
-		// FLAG);
-		super.setUrlAndMsg(request, "emp.list.action", "vo.edit.success", FLAG);
+		FileUtils fileUtil = null;
+		vo.setIneid(super.getEid()); // 通过Session取得当前操作者的雇员编号
+		if (!(vo.getPassword() == null || "".equals(vo.getPassword()))) {	// 要修改密码
+			vo.setPassword(PasswordUtil.getPassword(vo.getPassword())); // 密码加密处理
+		} else {
+			vo.setPassword(null); // “”字符串问题
+		}
+		if (!pic.isEmpty()) { // 如果说现在文件有上传
+			fileUtil = new FileUtils(pic);
+			if ("nophoto.png".equals(vo.getPhoto())) {	// 原始没有图片名称
+				vo.setPhoto(fileUtil.createFileName()); // 把生成的文件名称保存在VO类之中
+			}
+		}
+		try {
+			if (this.empServiceBack.edit(vo)) {
+				if (fileUtil != null) { // 准备上传文件
+					fileUtil.saveFile(request, "upload/member/",
+							vo.getPhoto());
+				}
+				super.setUrlAndMsg(request, "emp.list.action", "vo.edit.success",
+						FLAG);
+			} else {
+				super.setUrlAndMsg(request, "emp.list.action", "vo.edit.failure", FLAG);
+			}
+		} catch (DeptManagerExistException e) { // emp.add.dept.mgr.failure
+			super.setUrlAndMsg(request, "emp.list.action",
+					"emp.add.dept.mgr.failure");
+		}  catch (LevelNotEnoughException e) { // level.not.enough.failure
+			super.setUrlAndMsg(request, "emp.list.action",
+					"level.not.enough.failure");
+		} 
 		return mav;
 	}
 

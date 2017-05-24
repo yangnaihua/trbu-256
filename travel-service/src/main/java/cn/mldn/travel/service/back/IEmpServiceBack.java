@@ -8,9 +8,37 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 
 import cn.mldn.travel.exception.DeptManagerExistException;
+import cn.mldn.travel.exception.LevelNotEnoughException;
 import cn.mldn.travel.vo.Emp;
 
 public interface IEmpServiceBack {
+	/**
+	 * 实现雇员信息的追加，该方法要执行如下的操作：<br>
+	 * 1、随后根据增加雇员级别，来判断所在的部门情况，如果是该部门已经存在有经理，那么将无法进行保存，应该抛出异常；<br>
+	 * 2、判断当前操作者的级别是否为经理，如果为经理才可以进行经理相关处理；<br>
+	 * 3、进行雇员信息的保存；
+	 * @param vo 包含有要修改的雇员信息
+	 * @return 增加成功返回true，如果重名或增加失败返回false
+	 * @throws DeptManagerExistException 如果现在该部门存在有经理，则抛出此异常
+	 */
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:edit")
+	public boolean edit(Emp vo) throws DeptManagerExistException,LevelNotEnoughException ;
+	/**
+	 * 进行雇员数据追加前的信息查询处理，该方法要执行如下操作：<br/>
+	 * 1、调用IDeptDAO.findAll()取得全部的部门信息；<br/>
+	 * 2、调用ILevelDAO.findAll()取得全部的级别信息；<br/>
+	 * 3、调用IEmpDAO.findById()方法取得要修改的雇员信息。<br/>
+	 * @param eid 要修改的雇员编号
+	 * @return 返回有如下的数据内容：<br>
+	 * 1、key = allDepts、value = 全部部门信息；<br>
+	 * 2、key = allLevels、value = 全部的级别信息；<br>
+	 * 3、key = emp、value = 雇员信息；<br>
+	 */
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:edit")
+	public Map<String,Object> getEditPre(String eid) ;
+	
 	/**
 	 * 进行全部雇员信息的数据列表显示处理， 该处理要执行如下操作：<br>
 	 * 1、调用ILevelDAO.findAll()方法取得全部的级别信息；<br>
@@ -47,6 +75,8 @@ public interface IEmpServiceBack {
 	 * @return 增加成功返回true，如果重名或增加失败返回false
 	 * @throws DeptManagerExistException 如果现在该部门存在有经理，则抛出此异常
 	 */
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:add")
 	public boolean add(Emp vo) throws DeptManagerExistException ;
 	
 	/**
@@ -57,6 +87,8 @@ public interface IEmpServiceBack {
 	 * 1、key = allDepts、value = 全部部门信息；<br>
 	 * 2、key = allLevels、value = 全部的级别信息；<br>
 	 */
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:add")
 	public Map<String,Object> getAddPre() ;
 	
 	/**
