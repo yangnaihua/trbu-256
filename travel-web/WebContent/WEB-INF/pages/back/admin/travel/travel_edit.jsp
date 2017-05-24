@@ -57,10 +57,10 @@
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
 									<input type="text" id="sdate" name="sdate" class="form-control"
-										placeholder="请选择出差开始时间" readonly>
+										placeholder="请选择出差开始时间"> 
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
-								<div class="col-md-4" id="destinationMsg"></div>
+								<div class="col-md-4" id="sdateMsg"></div>
 							</div>
 							<div class="form-group" id="edateDiv">
 								<!-- 定义表单提示文字 -->
@@ -68,7 +68,7 @@
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
 									<input type="text" id="edate" name="edate" class="form-control"
-										placeholder="请选择出差结束时间" readonly>
+										placeholder="请选择出差结束时间">
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="edateMsg"></div>
