@@ -41,7 +41,7 @@
 								<label class="col-md-3 control-label" for="password">登录密码：</label>
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
-									<input type="text" id="password" name="password" class="form-control"
+									<input type="password" id="password" name="password" class="form-control"
 										placeholder="请输入雇员登录密码">
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
@@ -57,6 +57,17 @@
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="enameMsg">${errors['ename']}</div>
+							</div>
+							<div class="form-group" id="salDiv">
+								<!-- 定义表单提示文字 -->
+								<label class="col-md-3 control-label" for="sal">基本工资：</label>
+								<div class="col-md-5">
+									<!-- 定义表单输入组件 -->
+									<input type="text" id="sal" name="sal" class="form-control"
+										placeholder="请输入雇员月薪">
+								</div>
+								<!-- 定义表单错误提示显示元素 -->
+								<div class="col-md-4" id="salMsg">${errors['sal']}</div>
 							</div>
 							<div class="form-group" id="phoneDiv">
 								<!-- 定义表单提示文字 -->
@@ -83,15 +94,15 @@
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="didMsg">${errors['did']}</div>
 							</div>
-							<div class="form-group" id="jidDiv">
+							<div class="form-group" id="lidDiv">
 								<!-- 定义表单提示文字 -->
-								<label class="col-md-3 control-label" for="jid">出差类型：</label>
+								<label class="col-md-3 control-label" for="lid">雇员级别：</label>
 								<div class="col-md-5">
-									<select id="jid" name="jid" class="form-control">
+									<select id="lid" name="lid" class="form-control">
 										<option value="">====== 请选择雇员职务 ======</option>
 										<c:forEach items="${allLevels}" var="lev">
 											<c:if test="${lev.level ge level}">
-												<option value="${lev.lid}">${lev.title}</option>
+												<option value="${lev.lid}" ${"staff" == lev.lid ? "selected" : ""}>${lev.title}</option>
 											</c:if>
 										</c:forEach>
 									</select>
