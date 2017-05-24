@@ -21,7 +21,9 @@ import cn.mldn.travel.vo.Dept;
 import cn.mldn.travel.vo.Emp;
 
 @Service
-public class EmpServiceBackImpl extends AbstractService implements IEmpServiceBack {
+public class EmpServiceBackImpl extends AbstractService
+		implements
+			IEmpServiceBack {
 	@Resource
 	private IEmpDAO empDAO;
 	@Resource
@@ -31,34 +33,49 @@ public class EmpServiceBackImpl extends AbstractService implements IEmpServiceBa
 	@Resource
 	private ILevelDAO levelDAO;
 	@Resource
-	private IDeptDAO deptDAO ;
-	
+	private IDeptDAO deptDAO;
+
+	@Override
+	public Map<String, Object> list(long currentPage, int lineSize,
+			String column, String keyWord) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 之所以定义一个变量进行接收，主要的目的：对于数据查询和统计都需要使用到Map集合
+		Map<String, Object> param = super.handleParam(currentPage, lineSize,
+				column, keyWord);
+		map.put("allEmps", this.empDAO.findAllSplit(param));
+		map.put("allRecorders", this.empDAO.getAllCount(param));
+		map.put("allDepts", this.deptDAO.findAll());
+		map.put("allLevels", this.levelDAO.findAll());
+		return map;
+	}
+
 	@Override
 	public Emp getEid(String eid) {
 		return this.empDAO.findById(eid);
 	}
-	
+
 	@Override
 	public boolean add(Emp vo) throws DeptManagerExistException {
-		if (this.empDAO.findById(vo.getEid()) == null) {	// 1、判断要追加的用户的id是否存在，如果存在则无法进行保存
-			vo.setHiredate(new Date()); 	// 雇佣日期设置为当前日期
-			vo.setLocked(0);	// 新增加用户默认为活跃状态
+		if (this.empDAO.findById(vo.getEid()) == null) { // 1、判断要追加的用户的id是否存在，如果存在则无法进行保存
+			vo.setHiredate(new Date()); // 雇佣日期设置为当前日期
+			vo.setLocked(0); // 新增加用户默认为活跃状态
 			System.out.println(vo);
 			// 2、判断当前操作者的级别以及所在的部门信息，就需要首先取得操作者的相关信息
-			Emp humanEmp = this.empDAO.findById(vo.getIneid()) ;
-			if (humanEmp.getDid().equals(2L)) {	// 判断当前的操作者是否是人事部门
-				if ("staff".equals(vo.getLid())) {	// 3、判断当前要追加的新雇员信息是否级别为普通员工
-					return this.empDAO.doCreate(vo) ;
-				} else {	// 不是员工就是经理或总监
-					if ("manager".equals(humanEmp.getLid())) {	// 操作者级别为manager
-						Dept dept = this.deptDAO.findById(vo.getDid()) ;	// 判断要处理的部门信息
-						if (dept.getEid() == null) {	// 该部门现在没有经理
-							if (this.empDAO.doCreate(vo)) {	// 保存新用户
-								dept.setEid(vo.getEid()); 	// 新雇员为部门经理
-								return this.deptDAO.doUpdateManager(dept) ;
+			Emp humanEmp = this.empDAO.findById(vo.getIneid());
+			if (humanEmp.getDid().equals(2L)) { // 判断当前的操作者是否是人事部门
+				if ("staff".equals(vo.getLid())) { // 3、判断当前要追加的新雇员信息是否级别为普通员工
+					return this.empDAO.doCreate(vo);
+				} else { // 不是员工就是经理或总监
+					if ("manager".equals(humanEmp.getLid())) { // 操作者级别为manager
+						Dept dept = this.deptDAO.findById(vo.getDid()); // 判断要处理的部门信息
+						if (dept.getEid() == null) { // 该部门现在没有经理
+							if (this.empDAO.doCreate(vo)) { // 保存新用户
+								dept.setEid(vo.getEid()); // 新雇员为部门经理
+								return this.deptDAO.doUpdateManager(dept);
 							}
 						} else {
-							throw new DeptManagerExistException("该部门已经有经理了，无法进行新任经理的添加！") ;
+							throw new DeptManagerExistException(
+									"该部门已经有经理了，无法进行新任经理的添加！");
 						}
 					}
 				}
@@ -66,28 +83,27 @@ public class EmpServiceBackImpl extends AbstractService implements IEmpServiceBa
 		}
 		return false;
 	}
-	
-	
+
 	@Override
 	public Map<String, Object> getAddPre() {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		map.put("allDepts", this.deptDAO.findAll()) ;
-		map.put("allLevels", this.levelDAO.findAll()) ;
-		return map ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("allDepts", this.deptDAO.findAll());
+		map.put("allLevels", this.levelDAO.findAll());
+		return map;
 	}
 
 	@Override
 	public Map<String, Object> getDetails(String eid) {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		Emp emp = this.empDAO.findById(eid) ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Emp emp = this.empDAO.findById(eid);
 		if (emp != null) {
-			map.put("dept", this.deptDAO.findById(emp.getDid())) ;
-			map.put("level", this.levelDAO.findById(emp.getLid())) ;
+			map.put("dept", this.deptDAO.findById(emp.getDid()));
+			map.put("level", this.levelDAO.findById(emp.getLid()));
 		}
-		map.put("emp", emp) ;
+		map.put("emp", emp);
 		return map;
 	}
-	
+
 	@Override
 	public Map<String, Object> get(String eid, String password) {
 		Map<String, Object> map = new HashMap<String, Object>();

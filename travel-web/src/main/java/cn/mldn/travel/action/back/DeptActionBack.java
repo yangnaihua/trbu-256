@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.mldn.travel.service.back.IDeptServiceBack;
 import cn.mldn.travel.vo.Dept;
 import cn.mldn.travel.vo.Emp;
+import cn.mldn.travel.vo.Level;
 import cn.mldn.util.action.abs.AbstractBaseAction;
 
 @Controller

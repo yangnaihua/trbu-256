@@ -12,6 +12,24 @@ import cn.mldn.travel.vo.Emp;
 
 public interface IEmpServiceBack {
 	/**
+	 * 进行全部雇员信息的数据列表显示处理， 该处理要执行如下操作：<br>
+	 * 1、调用ILevelDAO.findAll()方法取得全部的级别信息；<br>
+	 * 2、调用IDeptDAO.findAll()方法取得全部部门信息；<br>
+	 * 3、调用IEmpDAO.findAllSplit()方法进行全部雇员数据的分页查询；<br>
+	 * 4、调用IEmpDAO.getAllCount()方法进行全部雇员数量的查询。<br>
+	 * @param currentPage 当前页
+	 * @param lineSize 每页显示行
+	 * @param column 模糊查询列
+	 * @param keyWord 关键字
+	 * @return 包含有如下的数据组成：<br>
+	 * 1、key = allDepts、value = 全部部门信息；<br>
+	 * 2、key = allLevels、value = 全部的级别信息；<br>
+	 * 3、key = allEmps、value = 全部雇员信息；<br>
+	 * 4、key = allRecorders、value = 雇员总量。
+	 */
+	public Map<String,Object> list(long currentPage,int lineSize,String column,String keyWord) ;
+	
+	/**
 	 * 调用IEmpDAO.findById()方法根据eid查询雇员信息
 	 * @param eid 雇员编号
 	 * @return 如果有雇员返回对象

@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.IEmpDAO">
+	
+	<select id="getAllCount" resultType="long" parameterType="map">
+		SELECT COUNT(*) FROM emp 
+		<where>
+			<if test="column != null and keyWord != null">
+				${column} LIKE #{keyWord}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllSplit" resultType="Emp" parameterType="map">
+		SELECT eid,lid,did,ename,sal,phone,password,photo,note,hiredate,ineid,locked
+		FROM emp
+		<where>
+			<if test="column != null and keyWord != null">
+				${column} LIKE #{keyWord}
+			</if>
+		</where>
+		LIMIT #{start},#{lineSize}
+	</select>
+
 	<insert id="doCreate" parameterType="Emp">
 		INSERT INTO emp (eid,lid,did,ename,sal,phone,password,photo,note,hiredate,ineid) 
 		VALUES (#{eid},#{lid},#{did},#{ename},#{sal},#{phone},#{password},#{photo},#{note},#{hiredate},#{ineid}) ;
