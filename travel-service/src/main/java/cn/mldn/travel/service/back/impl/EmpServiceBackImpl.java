@@ -34,6 +34,11 @@ public class EmpServiceBackImpl extends AbstractService implements IEmpServiceBa
 	private IDeptDAO deptDAO ;
 	
 	@Override
+	public Emp getEid(String eid) {
+		return this.empDAO.findById(eid);
+	}
+	
+	@Override
 	public boolean add(Emp vo) throws DeptManagerExistException {
 		if (this.empDAO.findById(vo.getEid()) == null) {	// 1、判断要追加的用户的id是否存在，如果存在则无法进行保存
 			vo.setHiredate(new Date()); 	// 雇佣日期设置为当前日期

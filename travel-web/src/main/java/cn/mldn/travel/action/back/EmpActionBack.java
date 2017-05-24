@@ -30,6 +30,15 @@ public class EmpActionBack extends AbstractBaseAction {
 
 	@Resource
 	private IEmpServiceBack empServiceBack;
+	
+	@RequestMapping("add_check")
+	@RequiresUser
+	@RequiresRoles("emp")
+	@RequiresPermissions("emp:add")
+	public ModelAndView check(HttpServletResponse response,String eid) {
+		super.print(response, this.empServiceBack.getEid(eid) == null);
+		return null;
+	}
 
 	@RequestMapping("add_pre")
 	@RequiresUser

@@ -66,7 +66,7 @@
 									<input type="text" id="sal" name="sal" class="form-control"
 										placeholder="请输入雇员月薪">
 								</div>
-								<!-- 定义表单错误提示显示元素 -->
+								<!-- 定义表单错误提示显示元素 --> 
 								<div class="col-md-4" id="salMsg">${errors['sal']}</div>
 							</div>
 							<div class="form-group" id="phoneDiv">

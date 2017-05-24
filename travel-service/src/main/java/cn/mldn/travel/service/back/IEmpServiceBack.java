@@ -12,6 +12,13 @@ import cn.mldn.travel.vo.Emp;
 
 public interface IEmpServiceBack {
 	/**
+	 * 调用IEmpDAO.findById()方法根据eid查询雇员信息
+	 * @param eid 雇员编号
+	 * @return 如果有雇员返回对象
+	 */
+	public Emp getEid(String eid) ;
+	
+	/**
 	 * 实现雇员信息的追加，该方法要执行如下的操作：<br>
 	 * 1、要判断当前追加的雇员编号信息是否存在，如果存在则无法添加；<br>
 	 * 2、随后根据增加雇员级别，来判断所在的部门情况，如果是该部门已经存在有经理，那么将无法进行保存，应该抛出异常；<br>
