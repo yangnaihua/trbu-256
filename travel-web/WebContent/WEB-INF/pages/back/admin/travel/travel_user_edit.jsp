@@ -50,7 +50,8 @@
 							</tr> 
 						</tbody>
 					</table>
-					<div id="splitBarDiv" style="float:right">
+					<div id="pageDiv" class="text-right">
+						<ul class="pagination pagination-sm" id="pagecontrol"></ul>
 					</div>
 				</div>
 				<div class="panel-footer">

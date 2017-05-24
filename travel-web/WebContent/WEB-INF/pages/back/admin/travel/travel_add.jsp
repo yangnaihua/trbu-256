@@ -65,7 +65,7 @@
 							</div>
 							<div class="form-group" id="edateDiv">
 								<!-- 定义表单提示文字 -->
-								<label class="col-md-3 control-label" for="edate">出差开始日期：</label>
+								<label class="col-md-3 control-label" for="edate">出差结束日期：</label>
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
 									<input type="text" id="edate" name="edate" class="form-control"

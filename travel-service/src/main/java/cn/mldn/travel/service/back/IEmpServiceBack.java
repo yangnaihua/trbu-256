@@ -7,9 +7,17 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 
-import cn.mldn.travel.vo.Emp;
-
 public interface IEmpServiceBack {
+	/**
+	 * 进行雇员数据追加前的信息查询处理，该方法要执行如下操作：<br/>
+	 * 1、调用IDeptDAO.findAll()取得全部的部门信息；<br/>
+	 * 2、调用ILevelDAO.findAll()取得全部的级别信息；<br/>
+	 * @return 返回有如下的数据内容：<br>
+	 * 1、key = allDepts、value = 全部部门信息；<br>
+	 * 2、key = allLevels、value = 全部的级别信息；<br>
+	 */
+	public Map<String,Object> getAddPre() ;
+	
 	/**
 	 * 查看一个雇员的完整信息，包括雇员的基本信息以及所在部门信息
 	 * @param eid 雇员编号

@@ -29,6 +29,14 @@ public class EmpServiceBackImpl extends AbstractService implements IEmpServiceBa
 	private ILevelDAO levelDAO;
 	@Resource
 	private IDeptDAO deptDAO ;
+	
+	@Override
+	public Map<String, Object> getAddPre() {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		map.put("allDepts", this.deptDAO.findAll()) ;
+		map.put("allLevels", this.levelDAO.findAll()) ;
+		return map ;
+	}
 
 	@Override
 	public Map<String, Object> getDetails(String eid) {
