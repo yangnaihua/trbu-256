@@ -1,14 +1,15 @@
 $(function(){
-	
-	$(levelBtn).on("click",function(){
-		did = $(this).attr("alt") ;
-		// console.log(did) ;
-		$.post("pages/back/admin/dept/mgr.action",{"did":did},function(data){
-			$("#mgr-" + did).empty() ;	// 清空已有的领导信息
-			operateAlert(data.trim() == "true","部门领导更新成功！","部门领导更新失败！") ;
-			$("#userInfo").modal("toggle") ;
-		},"text") ;
-	}) ;
+	try {
+		$(levelBtn).on("click",function(){
+			did = $(this).attr("alt") ;
+			// console.log(did) ;
+			$.post("pages/back/admin/dept/mgr.action",{"did":did},function(data){
+				$("#mgr-" + did).empty() ;	// 清空已有的领导信息
+				operateAlert(data.trim() == "true","部门领导更新成功！","部门领导更新失败！") ;
+				$("#userInfo").modal("toggle") ;
+			},"text") ;
+		}) ;
+	} catch (e) {}
 	
 	$("span[id^=eid-]").each(function(){
 		$(this).on("click",function(){
