@@ -8,6 +8,9 @@
 	<select id="findById" resultType="Dept" parameterType="long">
 		SELECT did,dname,eid FROM dept WHERE did=#{did} ;
 	</select>
+	<update id="doUpdateManager" parameterType="Dept">
+		UPDATE dept SET eid=#{eid} WHERE did=#{did}
+	</update>
 	<update id="doUpdate" parameterType="Dept">
 		UPDATE dept SET dname=#{dname} WHERE did=#{did}
 	</update> 

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.mldn.travel.service.back.IDeptServiceBack;
 import cn.mldn.travel.vo.Dept;
 import cn.mldn.travel.vo.Emp;
+import cn.mldn.travel.vo.Level;
 import cn.mldn.util.action.abs.AbstractBaseAction;
 
 @Controller
@@ -26,6 +27,15 @@ import cn.mldn.util.action.abs.AbstractBaseAction;
 public class DeptActionBack extends AbstractBaseAction {
 	@Resource
 	private IDeptServiceBack deptServiceBack ;
+	
+	@RequestMapping("mgr")
+	@RequiresRoles(value = {"emp"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"dept:edit","emp:edit"}, logical = Logical.AND)
+	public ModelAndView editMgr(HttpServletResponse response,Long did) {
+		super.print(response,
+				this.deptServiceBack.editLevel(did, super.getEid()));
+		return null;
+	}
 	
 	@RequestMapping("edit")
 	@RequiresUser
