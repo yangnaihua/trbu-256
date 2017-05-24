@@ -22,6 +22,24 @@ public class TravelServiceBackImpl extends AbstractService
 	private ITravelDAO travelDAO ;
 	
 	@Override
+	public Map<String, Object> editPre(Long tid) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		map.put("allItems", this.itemDAO.findAll()) ;
+		Travel travel = this.travelDAO.findById(tid) ;
+		if (travel.getAudit().equals(9)) {
+			map.put("travel", travel) ;
+		}
+		return map ;
+	}
+	@Override
+	public boolean edit(Travel vo) {
+		if (vo.getSdate().before(vo.getEdate())) {	// 开始日期在结束日期之前
+			return this.travelDAO.doUpdate(vo) ;
+		}
+		return false;
+	}
+	
+	@Override
 	public Map<String, Object> listSelf(String seid,long currentPage, int lineSize,
 			String column, String keyWord) {
 		Map<String,Object> map = new HashMap<String,Object>() ;

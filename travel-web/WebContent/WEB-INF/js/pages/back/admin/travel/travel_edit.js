@@ -55,7 +55,7 @@ $(function() {
 				required : true,
 				date : true
 			} ,
-			"destination" : {
+			"dest" : {
 				required : true 
 			},
 			"note" : {

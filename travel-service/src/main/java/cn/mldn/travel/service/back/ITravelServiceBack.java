@@ -10,6 +10,25 @@ import cn.mldn.travel.vo.Travel;
 
 public interface ITravelServiceBack {
 	/**
+	 * 进行出差申请单填写的处理，能修改的申请单申请状态只能是9
+	 * @param tid 要修改的申请单编号
+	 * @return 包含有如下的返回结果：<br>
+	 * 1、key = allItems、value = 所有的出差分类；<br>
+	 * 2、key = travel、value = 单个申请单
+	 */
+	@RequiresRoles(value = { "travel" }, logical = Logical.OR)
+	@RequiresPermissions(value = { "travel:edit" }, logical = Logical.OR)
+	public Map<String,Object> editPre(Long tid) ;
+	/**
+	 * 出差填写，结束日期应该在开始日期之后处理
+	 * @param vo 出差单信息
+	 * @return 成功返回true
+	 */
+	@RequiresRoles(value = { "travel" }, logical = Logical.OR)
+	@RequiresPermissions(value = { "travel:edit" }, logical = Logical.OR)
+	public boolean edit(Travel vo) ;
+	
+	/**
 	 * 进行所有个人申请单的列表显示
 	 * @param seid 当前的经理信息
 	 * @param currentPage 当前页
