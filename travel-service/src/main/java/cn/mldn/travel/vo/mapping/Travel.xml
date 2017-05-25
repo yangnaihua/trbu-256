@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
+
+	<insert id="doCreateTravelEmp" parameterType="TravelEmp">
+		INSERT INTO travel_emp(tid,eid) VALUES (#{tid},#{eid}) ;
+	</insert>
 	
 	<delete id="doRemoveSelf" parameterType="Travel">
 		DELETE FROM travel WHERE tid=#{tid} AND seid=#{seid} AND (audit=9 OR audit=2)

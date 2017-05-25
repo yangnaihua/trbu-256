@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 import cn.mldn.travel.dao.IDeptDAO;
 import cn.mldn.travel.dao.IEmpDAO;
 import cn.mldn.travel.dao.IItemDAO;
+import cn.mldn.travel.dao.ILevelDAO;
 import cn.mldn.travel.dao.ITravelDAO;
 import cn.mldn.travel.service.back.ITravelServiceBack;
 import cn.mldn.travel.service.back.abs.AbstractService;
+import cn.mldn.travel.vo.Emp;
 import cn.mldn.travel.vo.Travel;
+import cn.mldn.travel.vo.TravelEmp;
 @Service
 public class TravelServiceBackImpl extends AbstractService
 		implements
@@ -26,6 +29,22 @@ public class TravelServiceBackImpl extends AbstractService
 	private IDeptDAO deptDAO;
 	@Resource
 	private IEmpDAO empDAO ;
+	@Resource
+	private ILevelDAO levelDAO ;
+	
+	@Override
+	public Map<String, Object> addTravelEmp(TravelEmp vo) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		boolean status = this.travelDAO.doCreateTravelEmp(vo) ;	// 保存出差雇员安排信息
+		if (status) {	// 现在出差安排信息保存成功，可以查询要出差雇员的信息
+			Emp emp = this.empDAO.findById(vo.getEid()) ;
+			map.put("emp",emp) ;	// 出差雇员详情
+			map.put("dept", this.deptDAO.findById(emp.getDid())) ;
+			map.put("level", this.levelDAO.findById(emp.getLid())) ;
+		}
+		map.put("status",status) ;
+		return map ;
+	}
 	
 	@Override
 	public Map<String, Object> listByDept(long did, long currentPage,

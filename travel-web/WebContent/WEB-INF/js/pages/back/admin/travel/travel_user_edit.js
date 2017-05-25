@@ -23,7 +23,7 @@ function addTableRow(photo,eid,ename,sal,lid) {
 	} else if (lid == "chief") {
 		level = "总监" ;
 	}
-	row = 	"	<tr id='travel-1'>" + 
+	row = 	"	<tr id='travelEmp-"+eid+"'>" + 
 			"		<td class='text-center'>" +
 			"			<img src='upload/member/"+photo+"' style='width:20px;'/> " +
 			"		</td>" +
@@ -37,6 +37,29 @@ function addTableRow(photo,eid,ename,sal,lid) {
 			"		</td>" + 
 			"	</tr> " ;
 	$(empTable).append(row) ;
+	$("#addEmp-" + eid).on("click",function(){
+		tid = $("#tid").val() ;
+		$.post("pages/back/admin/travel/add_emp.action",{"eid":eid,"tid":tid},function(data){
+			if (data.status == true) {	// 待出发用户添加完成
+				$("#travelEmp-" + eid).remove() ;
+				rowInfo = 	"<tr id='travel-1'>" + 
+							"	<td class='text-center'>" +
+							"		<img src='upload/member/"+data.emp.photo+"' style='width:20px;'/> " +
+							"	</td>" +
+							"	<td class='text-center'>"+data.emp.eid+"</td>" +
+							"	<td class='text-center'>"+data.emp.ename+"</td>" +
+							"	<td class='text-center'>￥"+data.emp.sal+"</td>" +
+							"	<td class='text-center'>"+data.level.title+"</td>" +
+							"	<td class='text-center'>"+data.dept.dname+"</td>" +
+							"	<td class='text-center'>" +
+							"		<button class='btn btn-danger btn-xs' id='remove-"+data.emp.eid+"-"+tid+"'>" +
+							"			<span class='glyphicon glyphicon-remove'></span>&nbsp;移除</button>" +
+							"	</td>" +
+							"</tr> " ;
+				$("#travelEmpTable").append(rowInfo) ;
+			}
+		},"json") ;
+	}) ;
 }
 $(function(){
 	$("#did").on("change",function(){
