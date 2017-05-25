@@ -1,11 +1,23 @@
 package cn.mldn.travel.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.mldn.travel.vo.Emp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface IEmpDAO extends IBaseDAO<String, Emp> {
+	
+	public List<Emp> findAllByDept(Map<String,Object> param) ;
+	public Long getAllCountByDept(Map<String,Object> param) ;
+	
+	/**
+	 * 根据差旅编号查询出发布此差旅信息的雇员
+	 * @param tid 差旅编号
+	 * @return 雇员信息
+	 */
+	public Emp findByTravel(long tid) ;
+	
 	/**
 	 * 查询出所有指定编号的雇员信息
 	 * @param eid 雇员编号

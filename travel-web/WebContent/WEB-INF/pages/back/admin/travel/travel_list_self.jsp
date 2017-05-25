@@ -70,7 +70,7 @@
 										<c:if test="${trv.audit==9}">
 											<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_SUBMIT_URL%>">
 												<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;提交申请</a>
-											<a type="button" class="btn btn-warning btn-xs" href="<%=TRAVEL_USER_URL%>">
+											<a type="button" class="btn btn-warning btn-xs" href="<%=TRAVEL_USER_URL%>?tid=${trv.tid}">
 												<span class="glyphicon glyphicon-user"></span>&nbsp;出差人员</a>
 											<a type="button" class="btn btn-warning btn-xs" href="<%=TRAVEL_COST_URL%>">
 												<span class="glyphicon glyphicon-credit-card"></span>&nbsp;出差费用</a>

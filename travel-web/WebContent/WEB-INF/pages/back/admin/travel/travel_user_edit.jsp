@@ -74,12 +74,11 @@
 					<label class="col-md-2 control-label" for="did">员工所在部门：</label>
 					<div class="col-md-5">
 						<select id="did" name="did" class="form-control">
-							<option value="">====== 请选择雇员所在部门 ======</option>
-							<option value="10">开发部</option>
-							<option value="10">市场部</option>
-							<option value="10">财务部</option>
+							<c:forEach items="${allDepts}" var="me">
+								<option value="${me.key}" ${emp.did==me.key ? "selected" : ""}>${me.value}</option>
+							</c:forEach>
 						</select>
-					</div>
+					</div> 
 				</div>
 			</div>
 			<div class="modal-body">
@@ -113,8 +112,8 @@
 					</table>
 				</div>
 				<div id="pageDiv" class="text-right">
-						<ul class="pagination pagination-sm" id="pagecontrol"></ul>
-					</div>
+					<ul class="pagination pagination-sm" id="pagecontrol"></ul>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>

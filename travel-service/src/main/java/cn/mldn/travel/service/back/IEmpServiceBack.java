@@ -12,6 +12,7 @@ import cn.mldn.travel.exception.LevelNotEnoughException;
 import cn.mldn.travel.vo.Emp;
 
 public interface IEmpServiceBack {
+	
 	/**
 	 * 进行雇员信息的删除处理，该删除操作要执行如下步骤：
 	 * 1、首先要求依次判断所有要删除的员工数据是否具备有领导级别的信息，如果存在有领导级别的信息则要求员工先进行降级，而后再更新部门领导；
