@@ -33,6 +33,11 @@ public class TravelServiceBackImpl extends AbstractService
 	private ILevelDAO levelDAO ;
 	
 	@Override
+	public boolean deleteTravelEmp(TravelEmp vo) {
+		return this.travelDAO.doRemoveTravelEmp(vo);
+	}
+	
+	@Override
 	public Map<String, Object> addTravelEmp(TravelEmp vo) {
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		boolean status = this.travelDAO.doCreateTravelEmp(vo) ;	// 保存出差雇员安排信息

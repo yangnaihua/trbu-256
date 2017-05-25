@@ -11,6 +11,13 @@ import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
 	/**
+	 * 删除指定的出差人员信息
+	 * @param vo 包括有出差编号、待选的雇员编号
+	 * @return 删除成功返回true
+	 */
+	public boolean deleteTravelEmp(TravelEmp vo) ;
+	
+	/**
 	 * 进行出差待选人员的配置
 	 * @param vo 包括有出差编号、待选的雇员编号
 	 * @return 返回的结果包含有如下信息：<br>

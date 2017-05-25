@@ -46,7 +46,7 @@
 									<td class="text-center">${allLevels[emp.lid]}</td>
 									<td class="text-center">${allDepts[emp.did]}</td>
 									<td class="text-center">
-										<button class="btn btn-danger btn-xs" id="remove-${eid}-${param.tid}">
+										<button class="btn btn-danger btn-xs" id="remove-${emp.eid}-${param.tid}">
 											<span class="glyphicon glyphicon-remove"></span>&nbsp;移除</button>
 									</td>
 								</tr> 
@@ -97,19 +97,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr id="travel-1">
-								<td class="text-center">
-									<img src="upload/member/nophoto.png" style="width:20px;"/> 
-								</td>
-								<td class="text-center">7369</td>
-								<td class="text-center">老李</td>
-								<td class="text-center">￥8923.23</td>
-								<td class="text-center">一级员工</td>
-								<td class="text-center">
-									<button class="btn btn-danger btn-xs" id="remove-1">
-										<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;增加</button>
-								</td>
-							</tr> 
 						</tbody>
 					</table>
 				</div>
