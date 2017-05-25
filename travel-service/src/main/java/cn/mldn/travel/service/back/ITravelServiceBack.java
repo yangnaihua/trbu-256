@@ -10,6 +10,15 @@ import cn.mldn.travel.vo.Travel;
 
 public interface ITravelServiceBack {
 	/**
+	 * 删除指定的差旅信息项
+	 * @param vo 要删除的差旅信息
+	 * @return 删除成功返回true
+	 */
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:delete"}, logical = Logical.OR)
+	public boolean delete(Travel vo) ;
+	
+	/**
 	 * 进行出差申请单填写的处理，能修改的申请单申请状态只能是9
 	 * @param tid 要修改的申请单编号
 	 * @return 包含有如下的返回结果：<br>

@@ -22,6 +22,11 @@ public class TravelServiceBackImpl extends AbstractService
 	private ITravelDAO travelDAO ;
 	
 	@Override
+	public boolean delete(Travel vo) {
+		return this.travelDAO.doRemoveSelf(vo);
+	}
+	
+	@Override
 	public Map<String, Object> editPre(Long tid) {
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		map.put("allItems", this.itemDAO.findAll()) ;
