@@ -27,7 +27,8 @@ public interface ITravelServiceBack {
 	 * 列出指定出差申请单的所有费用信息
 	 * @param tid 出差申请单
 	 * @return 返回如下内容：<br>
-	 * 1、key = allTypes、value = 所有费用分类；
+	 * 1、key = allTypes、value = 所有费用分类；<br>
+	 * 2、key = allCosts、value = 所有的支出信息。
 	 */
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
