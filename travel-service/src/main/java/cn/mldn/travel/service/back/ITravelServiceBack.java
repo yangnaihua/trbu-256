@@ -12,6 +12,18 @@ import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
 	/**
+	 * 进行出差单的申请提交，该提交要执行如下处理：<br>
+	 * 1、要根据tid取得全部出差的雇员信息，目的是为了统计出个数；
+	 * 2、要查询全部的出差费用信息，进行费用的计算；
+	 * 3、要设置提交日期、审核状态、总费用、总人数
+	 * @param tid
+	 * @return 提交成功返回true
+	 */
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:submit"}, logical = Logical.OR)
+	public boolean editSubmit(long tid) ;
+	
+	/**
 	 * 实现出差费用项的添加操作
 	 * @param vo 出差费用信息
 	 * @return 返回如下信息结果：<br>

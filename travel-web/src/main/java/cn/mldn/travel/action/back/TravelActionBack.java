@@ -151,7 +151,7 @@ public class TravelActionBack extends AbstractBaseAction {
 		mav.addObject("allDepts", deptMap);
 		return mav;
 	}
-	
+
 	@RequestMapping("delete_cost")
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
@@ -178,16 +178,16 @@ public class TravelActionBack extends AbstractBaseAction {
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
 	public ModelAndView editCost(long tid) {
 		ModelAndView mav = new ModelAndView(super.getUrl("travel.cost.page"));
-		Map<String,Object> map = this.travelServiceBack.listCost(tid) ;
+		Map<String, Object> map = this.travelServiceBack.listCost(tid);
 		mav.addAllObjects(map);
-		List<Type> allTypes = (List<Type>) map.get("allTypes") ;
-		Iterator<Type> iter = allTypes.iterator() ;
-		Map<Long,String> typeMap = new HashMap<Long,String>() ;
-		while(iter.hasNext()) {
-			Type type = iter.next() ;
-			typeMap.put(type.getTpid(), type.getTitle()) ;
+		List<Type> allTypes = (List<Type>) map.get("allTypes");
+		Iterator<Type> iter = allTypes.iterator();
+		Map<Long, String> typeMap = new HashMap<Long, String>();
+		while (iter.hasNext()) {
+			Type type = iter.next();
+			typeMap.put(type.getTpid(), type.getTitle());
 		}
-		mav.addObject("allTypes", typeMap) ;
+		mav.addObject("allTypes", typeMap);
 		return mav;
 	}
 
@@ -239,12 +239,15 @@ public class TravelActionBack extends AbstractBaseAction {
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:submit"}, logical = Logical.OR)
-	public ModelAndView submit(HttpServletRequest request) {
+	public ModelAndView submit(HttpServletRequest request, long tid) {
 		ModelAndView mav = new ModelAndView(super.getUrl("back.forward.page"));
-		// super.setUrlAndMsg(request, "travel.self.action",
-		// "travel.submit.failure");
-		super.setUrlAndMsg(request, "travel.self.action",
-				"travel.submit.success");
+		if (this.travelServiceBack.editSubmit(tid)) {
+			super.setUrlAndMsg(request, "travel.self.action",
+					"travel.submit.success");
+		} else {
+			super.setUrlAndMsg(request, "travel.self.action",
+					"travel.submit.failure");
+		}
 		return mav;
 	}
 }

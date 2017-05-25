@@ -3,6 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
 
+	<select id="getTravelEmpCount" parameterType="long" resultType="int">
+		SELECT COUNT(*) FROM travel_emp WHERE tid=#{tid}
+	</select>
+
+	<update id="doUpdateSubmit" parameterType="Travel">
+		UPDATE travel SET subdate=#{subdate},audit=#{audit},ecount=#{ecount},total=#{total}
+		WHERE tid=#{tid} AND audit=9 ;
+	</update>
+
 	<select id="findTravelByCost" parameterType="long" resultType="Travel">
 		SELECT tid,seid,iid,title,sdate,edate,dest,audit,note,ecount,total,subdate,auddate,anote,aeid
 		FROM travel 
