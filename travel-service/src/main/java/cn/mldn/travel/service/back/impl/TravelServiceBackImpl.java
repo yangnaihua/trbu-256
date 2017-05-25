@@ -12,6 +12,7 @@ import cn.mldn.travel.dao.IEmpDAO;
 import cn.mldn.travel.dao.IItemDAO;
 import cn.mldn.travel.dao.ILevelDAO;
 import cn.mldn.travel.dao.ITravelDAO;
+import cn.mldn.travel.dao.ITypeDAO;
 import cn.mldn.travel.service.back.ITravelServiceBack;
 import cn.mldn.travel.service.back.abs.AbstractService;
 import cn.mldn.travel.vo.Emp;
@@ -31,6 +32,15 @@ public class TravelServiceBackImpl extends AbstractService
 	private IEmpDAO empDAO ;
 	@Resource
 	private ILevelDAO levelDAO ;
+	@Resource
+	private ITypeDAO typeDAO ;
+	
+	@Override
+	public Map<String, Object> listCost(long tid) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		map.put("allTypes", this.typeDAO.findAll()) ;
+		return map;
+	}
 	
 	@Override
 	public boolean deleteTravelEmp(TravelEmp vo) {

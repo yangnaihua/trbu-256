@@ -154,8 +154,9 @@ public class TravelActionBack extends AbstractBaseAction {
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public ModelAndView editCost() {
+	public ModelAndView editCost(long tid) { 
 		ModelAndView mav = new ModelAndView(super.getUrl("travel.cost.page"));
+		mav.addAllObjects(this.travelServiceBack.listCost(tid)) ;
 		return mav;
 	}
 

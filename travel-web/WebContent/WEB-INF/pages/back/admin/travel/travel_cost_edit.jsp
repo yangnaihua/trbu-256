@@ -89,9 +89,9 @@
 							<div class="col-md-5">
 								<select id="tid" name="tid" class="form-control">
 									<option value="">====== 请选择费用类型 ======</option>
-									<option value="1">房费</option>
-									<option value="2">餐费</option>
-									<option value="3">车费</option>
+									<c:forEach items="${allTypes}" var="type">
+										<option value="${type.tpid}">${type.title}</option>
+									</c:forEach>
 								</select>
 							</div>
 							<!-- 定义表单错误提示显示元素 -->

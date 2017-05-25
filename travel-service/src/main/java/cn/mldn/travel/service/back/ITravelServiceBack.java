@@ -11,6 +11,16 @@ import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
 	/**
+	 * 列出指定出差申请单的所有费用信息
+	 * @param tid 出差申请单
+	 * @return 返回如下内容：<br>
+	 * 1、key = allTypes、value = 所有费用分类；
+	 */
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
+	public Map<String,Object> listCost(long tid) ;
+	
+	/**
 	 * 删除指定的出差人员信息
 	 * @param vo 包括有出差编号、待选的雇员编号
 	 * @return 删除成功返回true
