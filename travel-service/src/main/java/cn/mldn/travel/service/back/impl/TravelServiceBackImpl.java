@@ -17,6 +17,7 @@ import cn.mldn.travel.service.back.ITravelServiceBack;
 import cn.mldn.travel.service.back.abs.AbstractService;
 import cn.mldn.travel.vo.Emp;
 import cn.mldn.travel.vo.Travel;
+import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 @Service
 public class TravelServiceBackImpl extends AbstractService
@@ -34,6 +35,18 @@ public class TravelServiceBackImpl extends AbstractService
 	private ILevelDAO levelDAO ;
 	@Resource
 	private ITypeDAO typeDAO ;
+	
+	@Override
+	public Map<String, Object> addCost(TravelCost vo) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		boolean status = this.travelDAO.doCreateTravelCost(vo) ;	// 会返回主键
+		if (status) {
+			map.put("cost", vo) ;	// 要保存会cost，因为需要这个主键
+			map.put("type", this.typeDAO.findById(vo.getTpid())) ;
+		}
+		map.put("status", status) ;
+		return map;
+	}
 	
 	@Override
 	public Map<String, Object> listCost(long tid) {

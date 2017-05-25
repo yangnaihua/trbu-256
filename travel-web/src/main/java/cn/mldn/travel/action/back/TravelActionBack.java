@@ -21,6 +21,7 @@ import cn.mldn.travel.service.back.ITravelServiceBack;
 import cn.mldn.travel.vo.Dept;
 import cn.mldn.travel.vo.Level;
 import cn.mldn.travel.vo.Travel;
+import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.action.abs.AbstractBaseAction;
 import cn.mldn.util.split.ActionSplitPageUtil;
@@ -150,13 +151,24 @@ public class TravelActionBack extends AbstractBaseAction {
 		return mav;
 	}
 
+	@RequestMapping("add_cost")
+	@RequiresUser
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
+	public ModelAndView addCost(HttpServletResponse response, TravelCost vo) {
+		JSONObject obj = new JSONObject();
+		obj.putAll(this.travelServiceBack.addCost(vo));
+		super.print(response, obj);
+		return null;
+	}
+
 	@RequestMapping("cost_edit_pre")
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public ModelAndView editCost(long tid) { 
+	public ModelAndView editCost(long tid) {
 		ModelAndView mav = new ModelAndView(super.getUrl("travel.cost.page"));
-		mav.addAllObjects(this.travelServiceBack.listCost(tid)) ;
+		mav.addAllObjects(this.travelServiceBack.listCost(tid));
 		return mav;
 	}
 

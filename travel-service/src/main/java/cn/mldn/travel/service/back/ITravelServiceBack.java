@@ -7,9 +7,22 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 
 import cn.mldn.travel.vo.Travel;
+import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
+	/**
+	 * 实现出差费用项的添加操作
+	 * @param vo 出差费用信息
+	 * @return 返回如下信息结果：<br>
+	 * 1、key = status、value = 保存成功或失败的标记；<br>
+	 * 2、key = cost、value = 出差信息项；<br>
+	 * 3、key = type、value = 出差信息分类。<br>
+	 */
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
+	public Map<String,Object> addCost(TravelCost vo) ;
+	
 	/**
 	 * 列出指定出差申请单的所有费用信息
 	 * @param tid 出差申请单

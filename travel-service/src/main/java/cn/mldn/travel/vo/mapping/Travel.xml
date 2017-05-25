@@ -3,6 +3,10 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
 
+	<insert id="doCreateTravelCost" parameterType="TravelCost" useGeneratedKeys="true" keyProperty="tcid">
+		INSERT INTO travel_cost (tpid,tid,price,title) VALUES (#{tpid},#{tid},#{price},#{title}) ;
+	</insert>
+
 	<delete id="doRemoveTravelEmp" parameterType="TravelEmp">
 		DELETE FROM travel_emp WHERE tid=#{tid} AND eid=#{eid}
 	</delete>
