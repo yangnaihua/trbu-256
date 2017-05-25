@@ -42,6 +42,8 @@ public interface ITravelServiceBack {
 	 * @return 返回如下数据：<br>
 	 * 1、key = allDepts、value = 所有的部门信息；
 	 * 2、key = emp、value = 出差发布者的雇员信息
+	 * 3、key = allEmps、value = 所有待出差者信息；
+	 * 4、key = allLevels、value = 所有级别信息。
 	 */
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)

@@ -1,10 +1,14 @@
 package cn.mldn.travel.dao;
 
+import java.util.List;
+
+import cn.mldn.travel.vo.Emp;
 import cn.mldn.travel.vo.Travel;
 import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface ITravelDAO extends IBaseDAO<Long, Travel> {
+	
 	/**
 	 * 进行travel_emp表的处理
 	 * @param vo 包含有差旅编号、出差待选编号

@@ -8,6 +8,13 @@ import cn.mldn.util.dao.IBaseDAO;
 
 public interface IEmpDAO extends IBaseDAO<String, Emp> {
 	
+	/**
+	 * 根据指定的出差的编号信息，列出该出差任务所需要的所有雇员信息
+	 * @param tid 出差编号
+	 * @return 返回所有的出差人员信息
+	 */
+	public List<Emp> findAllByTravel(long tid) ;
+	
 	public List<Emp> findAllByDept(Map<String,Object> param) ;
 	public Long getAllCountByDept(Map<String,Object> param) ;
 	
