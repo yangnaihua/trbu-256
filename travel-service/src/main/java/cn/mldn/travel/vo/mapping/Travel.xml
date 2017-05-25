@@ -3,6 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
 
+	<select id="findTravelByCost" parameterType="long" resultType="Travel">
+		SELECT tid,seid,iid,title,sdate,edate,dest,audit,note,ecount,total,subdate,auddate,anote,aeid
+		FROM travel 
+		WHERE tid=(
+			SELECT tid FROM travel_cost WHERE tcid=#{tcid})
+	</select>
+
+	<delete id="doRemoveTraveCost" parameterType="long">
+		DELETE FROM travel_cost WHERE tcid=#{tcid} 
+	</delete>
+	
+	
 	<select id="findAllTravelCost" parameterType="long" resultType="TravelCost">
 		SELECT tcid,tpid,tid,price,title
 		FROM travel_cost

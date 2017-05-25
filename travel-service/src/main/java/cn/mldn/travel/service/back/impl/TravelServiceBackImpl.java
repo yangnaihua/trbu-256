@@ -30,81 +30,95 @@ public class TravelServiceBackImpl extends AbstractService
 	@Resource
 	private IDeptDAO deptDAO;
 	@Resource
-	private IEmpDAO empDAO ;
+	private IEmpDAO empDAO;
 	@Resource
-	private ILevelDAO levelDAO ;
+	private ILevelDAO levelDAO;
 	@Resource
-	private ITypeDAO typeDAO ;
-	
+	private ITypeDAO typeDAO;
+
+	@Override
+	public boolean deleteCost(long tcid) {
+		Travel currentTravel = this.travelDAO.findTravelByCost(tcid); // 根据tcid取得差旅信息
+		if (currentTravel.getAudit().equals(9) || currentTravel.getAudit().equals(2)) {
+			return this.travelDAO.doRemoveTraveCost(tcid);
+		}
+		return false;
+	}
+
 	@Override
 	public Map<String, Object> addCost(TravelCost vo) {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		boolean status = this.travelDAO.doCreateTravelCost(vo) ;	// 会返回主键
-		if (status) {
-			map.put("cost", vo) ;	// 要保存会cost，因为需要这个主键
-			map.put("type", this.typeDAO.findById(vo.getTpid())) ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean status = false;
+		Travel currentTravel = this.travelDAO.findById(vo.getTid());
+		if (currentTravel.getAudit().equals(9) || currentTravel.getAudit().equals(2)) {
+			status = this.travelDAO.doCreateTravelCost(vo); // 会返回主键
+			if (status) {
+				map.put("cost", vo); // 要保存会cost，因为需要这个主键
+				map.put("type", this.typeDAO.findById(vo.getTpid()));
+			}
 		}
-		map.put("status", status) ;
+		map.put("status", status);
 		return map;
 	}
-	
+
 	@Override
 	public Map<String, Object> listCost(long tid) {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		map.put("allTypes", this.typeDAO.findAll()) ;
-		map.put("allCosts", this.travelDAO.findAllTravelCost(tid)) ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("allTypes", this.typeDAO.findAll());
+		map.put("allCosts", this.travelDAO.findAllTravelCost(tid));
 		return map;
 	}
-	
+
 	@Override
 	public boolean deleteTravelEmp(TravelEmp vo) {
 		return this.travelDAO.doRemoveTravelEmp(vo);
 	}
-	
+
 	@Override
 	public Map<String, Object> addTravelEmp(TravelEmp vo) {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		boolean status = false ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean status = false;
 		// 查询出出差相关信息
-		Travel currentTravel = this.travelDAO.findById(vo.getTid()) ;
-		Map<String,Object> param = new HashMap<String,Object>() ;
-		param.put("sdate", currentTravel.getSdate()) ;
-		param.put("edate", currentTravel.getEdate()) ;
-		param.put("eid", vo.getEid()) ;
-		if (this.empDAO.findTravelById(param) != null) {	// 该雇员现在没有出差安排，可用
-			status = this.travelDAO.doCreateTravelEmp(vo) ;	// 保存出差雇员安排信息
-			if (status) {	// 现在出差安排信息保存成功，可以查询要出差雇员的信息
-				Emp emp = this.empDAO.findById(vo.getEid()) ;
-				map.put("emp",emp) ;	// 出差雇员详情
-				map.put("dept", this.deptDAO.findById(emp.getDid())) ;
-				map.put("level", this.levelDAO.findById(emp.getLid())) ;
+		Travel currentTravel = this.travelDAO.findById(vo.getTid());
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("sdate", currentTravel.getSdate());
+		param.put("edate", currentTravel.getEdate());
+		param.put("eid", vo.getEid());
+		if (this.empDAO.findTravelById(param) != null) { // 该雇员现在没有出差安排，可用
+			status = this.travelDAO.doCreateTravelEmp(vo); // 保存出差雇员安排信息
+			if (status) { // 现在出差安排信息保存成功，可以查询要出差雇员的信息
+				Emp emp = this.empDAO.findById(vo.getEid());
+				map.put("emp", emp); // 出差雇员详情
+				map.put("dept", this.deptDAO.findById(emp.getDid()));
+				map.put("level", this.levelDAO.findById(emp.getLid()));
 			}
 		}
-		map.put("status",status) ;
-		return map ;
+		map.put("status", status);
+		return map;
 	}
-	
+
 	@Override
-	public Map<String, Object> listByDept(long tid,long did, long currentPage,
+	public Map<String, Object> listByDept(long tid, long did, long currentPage,
 			int lineSize, String column, String keyWord) {
-		Map<String,Object> map = new HashMap<String,Object>() ;
-		Map<String,Object> param = super.handleParam(currentPage, lineSize, column, keyWord) ;
-		Travel currentTravel = this.travelDAO.findById(tid) ;	// 取得当前操作的Travle，目的是为了取得日期
-		param.put("did", did) ;
-		param.put("sdate", currentTravel.getSdate()) ;
-		param.put("edate", currentTravel.getEdate()) ;
-		map.put("allEmps", this.empDAO.findAllByDept(param)) ;
-		map.put("allRecorders", this.empDAO.getAllCountByDept(param)) ;
-		return map ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> param = super.handleParam(currentPage, lineSize,
+				column, keyWord);
+		Travel currentTravel = this.travelDAO.findById(tid); // 取得当前操作的Travle，目的是为了取得日期
+		param.put("did", did);
+		param.put("sdate", currentTravel.getSdate());
+		param.put("edate", currentTravel.getEdate());
+		map.put("allEmps", this.empDAO.findAllByDept(param));
+		map.put("allRecorders", this.empDAO.getAllCountByDept(param));
+		return map;
 	}
-	
+
 	@Override
 	public Map<String, Object> listEmp(long tid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allDepts", this.deptDAO.findAll());
-		map.put("emp", this.empDAO.findByTravel(tid)) ;
-		map.put("allEmps", this.empDAO.findAllByTravel(tid)) ;
-		map.put("allLevels", this.levelDAO.findAll()) ;
+		map.put("emp", this.empDAO.findByTravel(tid));
+		map.put("allEmps", this.empDAO.findAllByTravel(tid));
+		map.put("allLevels", this.levelDAO.findAll());
 		return map;
 	}
 

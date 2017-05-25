@@ -15,9 +15,26 @@ function clearCostModal() {
 		$(this).prop("selected",false) ;
 	}) ;
 	myform.resetForm() ; 
-}
+} 
+function deleteCost(tcid) {
+	$.post("pages/back/admin/travel/delete_cost.action",{"tcid":tcid},function(data){
+		operateAlert(data.trim() == "true","支出项删除成功！" , "支出项删除失败！") ;
+		if (data.trim() == "true") {
+			$("#travel-" + tcid).remove() ;
+			calcTotal() ;
+		}
+	},"text") ;
+} 
 $(function(){
 	calcTotal() ;
+	
+	$("button[id^=remove-]").each(function(){
+		tcid = this.id.split("-")[1];
+		$(this).on("click",function(){ 
+			deleteCost(tcid) ;
+		}) ; 
+	}) ;
+	
 	$(addBtn).on("click",function(){
 		clearCostModal() ;
 		// Ajax异步读取用户信息
@@ -49,6 +66,9 @@ $(function(){
 										"	</td>" +
 										"</tr>" ;
 							$("#costTable").append(costInfo) ;
+							$("#remove-" + data.cost.tcid).on("click",function(){
+								deleteCost(data.cost.tcid) ;
+							}) ;
 							calcTotal() ;
 						}
 						$("#costInfo").modal("toggle") ;

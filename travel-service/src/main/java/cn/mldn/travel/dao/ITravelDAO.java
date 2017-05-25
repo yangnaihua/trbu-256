@@ -8,6 +8,21 @@ import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface ITravelDAO extends IBaseDAO<Long, Travel> {
+	
+	/**
+	 * 获得指定的费用项对应的差旅信息的详情
+	 * @param tcid 费用项
+	 * @return 差旅信息
+	 */
+	public Travel findTravelByCost(long tcid) ;
+	
+	/**
+	 * 移除某一个支出费用项
+	 * @param tcid 费用的编号
+	 * @return 成功返回true
+	 */
+	public boolean doRemoveTraveCost(long tcid) ;
+	
 	/**
 	 * 查询出指定出差费用的全部费用信息
 	 * @param tid 出差编号

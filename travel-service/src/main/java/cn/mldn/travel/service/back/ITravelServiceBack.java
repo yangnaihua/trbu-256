@@ -22,6 +22,12 @@ public interface ITravelServiceBack {
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
 	public Map<String,Object> addCost(TravelCost vo) ;
+	/**
+	 * 删除指定的费用信息
+	 * @param tcid 费用编号
+	 * @return 成功返回true
+	 */
+	public boolean deleteCost(long tcid) ;
 	
 	/**
 	 * 列出指定出差申请单的所有费用信息
