@@ -49,7 +49,15 @@ $(function() {
 			"iid" : {
 				required : true
 			} ,
-			"destination" : {
+			"sdate" : {
+				required : true,
+				date : true
+			} ,
+			"edate" : { 
+				required : true,
+				date : true
+			} ,
+			"dest" : {
 				required : true 
 			},
 			"note" : {

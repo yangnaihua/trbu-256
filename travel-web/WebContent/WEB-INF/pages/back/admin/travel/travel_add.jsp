@@ -37,18 +37,29 @@
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="titleMsg"></div>
 							</div>
+							<!-- 定义输入表单样式，其中id主要用于设置颜色样式 -->
+							<div class="form-group" id="destDiv">
+								<!-- 定义表单提示文字 -->
+								<label class="col-md-3 control-label" for="dest">出差目的地：</label>
+								<div class="col-md-5">
+									<!-- 定义表单输入组件 -->
+									<input type="text" id="dest" name="dest" class="form-control"
+										placeholder="请输入出差目的地">
+								</div>
+								<!-- 定义表单错误提示显示元素 -->
+								<div class="col-md-4" id="destMsg"></div>
+							</div>
 							<div class="form-group" id="iidDiv">
 								<!-- 定义表单提示文字 -->
 								<label class="col-md-3 control-label" for="iid">出差类型：</label>
-								<div class="col-md-5">
-									<select id="iid" name="iid" class="form-control">
-										<option value="">====== 请选择外出类型 ======</option>
-										<option value="1">测试</option>
-										<c:forEach items="${allItems}" var="item">
-											<option value="${item.iid}">${item.title}</option>
-										</c:forEach>
-									</select>
-								</div>
+									<div class="col-md-5">
+										<select id="iid" name="iid" class="form-control">
+											<option value="">====== 请选择外出类型 ======</option>
+											<c:forEach items="${allItems}" var="item">
+												<option value="${item.iid}">${item.title}</option>
+											</c:forEach>
+										</select>
+									</div>
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="iidMsg"></div>
 							</div>
@@ -58,10 +69,10 @@
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
 									<input type="text" id="sdate" name="sdate" class="form-control"
-										placeholder="请选择出差开始时间" readonly>
+										placeholder="请选择出差开始时间"> 
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
-								<div class="col-md-4" id="destinationMsg"></div>
+								<div class="col-md-4" id="sdateMsg"></div>
 							</div>
 							<div class="form-group" id="edateDiv">
 								<!-- 定义表单提示文字 -->
@@ -69,21 +80,10 @@
 								<div class="col-md-5">
 									<!-- 定义表单输入组件 -->
 									<input type="text" id="edate" name="edate" class="form-control"
-										placeholder="请选择出差结束时间" readonly>
+										placeholder="请选择出差结束时间">
 								</div>
 								<!-- 定义表单错误提示显示元素 -->
 								<div class="col-md-4" id="edateMsg"></div>
-							</div>
-							<div class="form-group" id="destinationDiv">
-								<!-- 定义表单提示文字 -->
-								<label class="col-md-3 control-label" for="destination">出差目的地：</label>
-								<div class="col-md-5">
-									<!-- 定义表单输入组件 -->
-									<input type="text" id="destination" name="destination" class="form-control"
-										placeholder="请填写本次出差的目的地">
-								</div>
-								<!-- 定义表单错误提示显示元素 -->
-								<div class="col-md-4" id="destinationMsg"></div>
 							</div>
 							<!-- 定义输入表单样式，其中id主要用于设置颜色样式 -->
 							<div class="form-group" id="noteDiv">

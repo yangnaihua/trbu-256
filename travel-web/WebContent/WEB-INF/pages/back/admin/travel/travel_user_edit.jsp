@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/pages/plugins/back/back_header.jsp"/>
+<script type="text/javascript" src="js/split_page.js"></script>
 <script type="text/javascript" src="js/pages/back/admin/travel/travel_user_edit.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -50,9 +51,6 @@
 							</tr> 
 						</tbody>
 					</table>
-					<div id="pageDiv" class="text-right">
-						<ul class="pagination pagination-sm" id="pagecontrol"></ul>
-					</div>
 				</div>
 				<div class="panel-footer">
 					<jsp:include page="/WEB-INF/pages/plugins/include_alert.jsp"/>
@@ -114,6 +112,9 @@
 						</tbody>
 					</table>
 				</div>
+				<div id="pageDiv" class="text-right">
+						<ul class="pagination pagination-sm" id="pagecontrol"></ul>
+					</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>

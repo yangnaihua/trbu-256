@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mldn.travel.dao.ITravelDAO">
+	
+	<delete id="doRemoveSelf" parameterType="Travel">
+		DELETE FROM travel WHERE tid=#{tid} AND seid=#{seid} AND (audit=9 OR audit=2)
+	</delete>
+
+	<select id="findById" parameterType="long" resultType="Travel">
+		SELECT tid,seid,iid,title,sdate,edate,dest,audit,note,ecount,total,subdate,auddate,anote,aeid
+		FROM travel WHERE tid=#{tid}
+	</select>
+	
+	<update id="doUpdate" parameterType="Travel">
+		UPDATE travel SET title=#{title},iid=#{iid},sdate=#{sdate},edate=#{edate},dest=#{dest},note=#{note}
+		WHERE tid=#{tid} AND seid=#{seid} AND audit=9
+	</update>
+
+	<select id="findAllSplit" parameterType="map" resultType="Travel">
+		SELECT tid,seid,iid,title,sdate,edate,dest,audit,note,ecount,total
+		FROM travel
+		<where>
+			seid=#{seid}
+			<if test="column != null and keyWord != null">
+				AND ${column} LIKE #{keyWord}
+			</if>
+		</where>
+		ORDER BY subdate DESC
+		LIMIT #{start},#{lineSize}
+	</select> 
+	<select id="getAllCount" parameterType="map" resultType="long">
+		SELECT COUNT(*) FROM travel
+		<where>
+			seid=#{seid}
+			<if test="column != null and keyWord != null">
+				AND ${column} LIKE #{keyWord}
+			</if>
+		</where>
+	</select>
+
+	<insert id="doCreate" parameterType="Travel">
+		INSERT INTO travel(seid,iid,title,sdate,edate,dest,audit,note) 
+		VALUES (#{seid},#{iid},#{title},#{sdate},#{edate},#{dest},#{audit},#{note}) ;
+	</insert>
+</mapper>
