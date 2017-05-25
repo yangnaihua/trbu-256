@@ -7,6 +7,12 @@ import cn.mldn.travel.vo.Emp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface IEmpDAO extends IBaseDAO<String, Emp> {
+	/**
+	 * 根据差旅安排判断指定的雇员信息是否可用
+	 * @param param 包含了差旅相关信息
+	 * @return 如果该雇员可以安排差旅返回雇员信息，如果不能返回null
+	 */
+	public Emp findTravelById(Map<String,Object> param) ; 
 	
 	/**
 	 * 根据指定的出差的编号信息，列出该出差任务所需要的所有雇员信息

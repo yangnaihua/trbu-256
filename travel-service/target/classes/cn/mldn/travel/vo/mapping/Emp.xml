@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.IEmpDAO">
+	
+
+	<select id="findTravelById" parameterType="map" resultType="Emp">
+		SELECT eid,lid,did,ename,sal,phone,password,photo,note,hiredate,ineid,locked
+		FROM emp
+		WHERE eid NOT IN (
+			SELECT eid 
+			FROM travel_emp
+			WHERE tid IN (
+				SELECT tid 
+				FROM travel 
+				WHERE ((sdate &gt;= #{sdate} AND sdate &lt;= #{edate})
+					OR (edate &gt;= #{sdate} AND edate &lt;= #{edate})) OR (
+					sdate &lt; #{sdate} AND edate &gt; #{edate})
+			)
+		) AND eid=#{eid}
+	</select>
 
 	<select id="findAllByTravel" parameterType="long" resultType="Emp">
 		SELECT eid,lid,did,ename,sal,phone,password,photo,note,hiredate,ineid,locked
@@ -15,6 +32,17 @@
 		FROM emp
 		<where>
 			locked!=2 AND did=#{did}
+			AND eid NOT IN (
+				SELECT eid 
+				FROM travel_emp
+				WHERE tid IN (
+					SELECT tid 
+					FROM travel 
+					WHERE ((sdate &gt;= #{sdate} AND sdate &lt;= #{edate})
+					OR (edate &gt;= #{sdate} AND edate &lt;= #{edate})) OR (
+					sdate &lt; #{sdate} AND edate &gt; #{edate})
+				)
+			)
 			<if test="column != null and keyWord != null">
 				AND ${column} LIKE #{keyWord}
 			</if>
@@ -27,6 +55,17 @@
 		SELECT COUNT(*) FROM emp 
 		<where>
 			locked!=2 AND did=#{did}
+			AND eid NOT IN (
+				SELECT eid 
+				FROM travel_emp
+				WHERE tid IN (
+					SELECT tid 
+					FROM travel 
+					WHERE ((sdate &gt;= #{sdate} AND sdate &lt;= #{edate})
+					OR (edate &gt;= #{sdate} AND edate &lt;= #{edate})) OR (
+					sdate &lt; #{sdate} AND edate &gt; #{edate})
+				)
+			)
 			<if test="column != null and keyWord != null">
 				AND ${column} LIKE #{keyWord}
 			</if>

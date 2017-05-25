@@ -34,7 +34,9 @@
 							<tr>
 								<th class="text-center"><strong>状态</strong></th>
 								<th class="text-center"><strong>申请标题</strong></th>
-								<th class="text-center"><strong>申请时间</strong></th>
+								<th class="text-center"><strong>申请日期</strong></th>
+								<th class="text-center"><strong>开始日期</strong></th>
+								<th class="text-center"><strong>结束日期</strong></th>
 								<th class="text-center"><strong>出差人数</strong></th>
 								<th class="text-center"><strong>差旅费用</strong></th>
 								<th class="text-center"><strong>操作</strong></th>
@@ -64,6 +66,8 @@
 										<span id="showBtn-${trv.tid}" onmouseover="this.style.cursor='hand'">${trv.title}</span>
 									</td>
 									<td class="text-center"><fmt:formatDate value="${trv.subdate}" pattern="yyyy-MM-dd"/></td>
+									<td class="text-center"><fmt:formatDate value="${trv.sdate}" pattern="yyyy-MM-dd"/></td>
+									<td class="text-center"><fmt:formatDate value="${trv.edate}" pattern="yyyy-MM-dd"/></td>
 									<td class="text-center">${trv.ecount}</td>
 									<td class="text-center">￥${trv.total}</td>
 									<td class="text-center">

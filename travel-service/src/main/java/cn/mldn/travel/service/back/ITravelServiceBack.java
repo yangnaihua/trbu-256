@@ -30,6 +30,7 @@ public interface ITravelServiceBack {
 	
 	/**
 	 * 进行出差人员配置的信息加载处理 
+	 * @param tid 本次编辑的差旅信息编号
 	 * @param did 部门编号
 	 * @param currentPage 页
 	 * @param lineSize 行
@@ -41,7 +42,7 @@ public interface ITravelServiceBack {
 	 */
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public Map<String,Object> listByDept(long did,long currentPage,int lineSize,String column,String keyWord) ;
+	public Map<String,Object> listByDept(long tid,long did,long currentPage,int lineSize,String column,String keyWord) ;
 	
 	/**
 	 * 根据指定的出差编号列出该出差操作中所有的员工信息以及所有的部门信息

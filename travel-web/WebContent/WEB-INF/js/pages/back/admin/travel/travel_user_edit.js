@@ -31,11 +31,13 @@ $(function(){
 function loadData() {	// 该函数名称一定要固定，不许修改
 	// 如果要想进行分页的处理列表前首先查询出部门编号
 	did = $("#did").val() ;	// 取得指定组件的value
+	tid = $("#tid").val() ;
 	console.log("部门编号：" + did) ;
 	$.post("pages/back/admin/travel/emp_dept.action", {
 		"did" : did,
 		"cp" : jsCommonCp, 
-		"ls" : jsCommonLs
+		"ls" : jsCommonLs,
+		"tid" : tid
 	}, function(data) {
 		console.log(data);
 		$("#empTable tr:gt(0)").remove() ;
@@ -89,6 +91,9 @@ function addTableRow(photo,eid,ename,sal,lid) {
 				$("#remove-"+data.emp.eid+"-"+tid).on("click",function(){
 					deleteEmpFun(eid,tid) ;
 				}) ;
+			} else {
+				$("#userInfo").modal("toggle") ;
+				operateAlert(false,"","该雇员已经有了项目安排无法添加到本次出差人员之内！") ;
 			}
 		},"json") ;
 	}) ;

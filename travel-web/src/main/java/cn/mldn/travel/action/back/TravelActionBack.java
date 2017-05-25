@@ -81,44 +81,45 @@ public class TravelActionBack extends AbstractBaseAction {
 				aspu.getKeyWord()));
 		return mav;
 	}
-	
+
 	@RequestMapping("delete_emp")
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public ModelAndView deleteEmp(HttpServletResponse response,TravelEmp vo) {
-		JSONObject obj = new JSONObject() ;
-		obj.put("status", this.travelServiceBack.deleteTravelEmp(vo)) ;
+	public ModelAndView deleteEmp(HttpServletResponse response, TravelEmp vo) {
+		JSONObject obj = new JSONObject();
+		obj.put("status", this.travelServiceBack.deleteTravelEmp(vo));
 		super.print(response, obj);
 		return null;
 	}
-	
+
 	@RequestMapping("add_emp")
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public ModelAndView addEmp(HttpServletResponse response,TravelEmp vo) {
-		Map<String,Object> map = this.travelServiceBack.addTravelEmp(vo) ;
-		JSONObject obj = new JSONObject() ;
+	public ModelAndView addEmp(HttpServletResponse response, TravelEmp vo) {
+		Map<String, Object> map = this.travelServiceBack.addTravelEmp(vo);
+		JSONObject obj = new JSONObject();
 		obj.putAll(map);
 		super.print(response, obj);
 		return null;
 	}
-	
+
 	@RequestMapping("emp_dept")
 	@RequiresUser
 	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
-	public ModelAndView listDept(HttpServletRequest request,HttpServletResponse response,long did) {
-		JSONObject obj = new JSONObject() ;
-		ActionSplitPageUtil aspu = new ActionSplitPageUtil(request,
-				"", "");
-		Map<String,Object> map = this.travelServiceBack.listByDept(did, aspu.getCurrentPage(), aspu.getLineSize(), aspu.getColumn(),
-				aspu.getKeyWord()) ;
-		obj.put("allRecorders", map.get("allRecorders")) ;
-		obj.put("allEmps", map.get("allEmps")) ;
+	public ModelAndView listDept(HttpServletRequest request,
+			HttpServletResponse response, long did, long tid) {
+		JSONObject obj = new JSONObject();
+		ActionSplitPageUtil aspu = new ActionSplitPageUtil(request, "", "");
+		Map<String, Object> map = this.travelServiceBack.listByDept(tid, did,
+				aspu.getCurrentPage(), aspu.getLineSize(), aspu.getColumn(),
+				aspu.getKeyWord());
+		obj.put("allRecorders", map.get("allRecorders"));
+		obj.put("allEmps", map.get("allEmps"));
 		super.print(response, obj);
-		return null ;
+		return null;
 	}
 
 	@RequestMapping("user_edit_pre")
@@ -127,17 +128,17 @@ public class TravelActionBack extends AbstractBaseAction {
 	@RequiresPermissions(value = {"travel:edit"}, logical = Logical.OR)
 	public ModelAndView editUser(long tid) {
 		ModelAndView mav = new ModelAndView(super.getUrl("travel.user.page"));
-		Map<String,Object> map = this.travelServiceBack.listEmp(tid) ;
-		mav.addAllObjects(map) ;
+		Map<String, Object> map = this.travelServiceBack.listEmp(tid);
+		mav.addAllObjects(map);
 		// 为了方便进行部门信息的显示将部门信息由List集合变为Map集合
-		List<Dept> allDepts = (List<Dept>) map.get("allDepts") ;
-		Map<Long,String> deptMap = new HashMap<Long,String>() ;
-		Iterator<Dept> iterDept = allDepts.iterator() ;
+		List<Dept> allDepts = (List<Dept>) map.get("allDepts");
+		Map<Long, String> deptMap = new HashMap<Long, String>();
+		Iterator<Dept> iterDept = allDepts.iterator();
 		while (iterDept.hasNext()) {
-			Dept dept = iterDept.next() ;
-			deptMap.put(dept.getDid(), dept.getDname()) ;
+			Dept dept = iterDept.next();
+			deptMap.put(dept.getDid(), dept.getDname());
 		}
-		List<Level> allLevels = (List<Level>) map.get("allLevels") ;
+		List<Level> allLevels = (List<Level>) map.get("allLevels");
 		Map<String, String> levelMap = new HashMap<String, String>();
 		Iterator<Level> iter2 = allLevels.iterator();
 		while (iter2.hasNext()) {
@@ -145,7 +146,7 @@ public class TravelActionBack extends AbstractBaseAction {
 			levelMap.put(lev.getLid(), lev.getTitle());
 		}
 		mav.addObject("allLevels", levelMap); // 属性名称一样会出现覆盖
-		mav.addObject("allDepts", deptMap) ;
+		mav.addObject("allDepts", deptMap);
 		return mav;
 	}
 
