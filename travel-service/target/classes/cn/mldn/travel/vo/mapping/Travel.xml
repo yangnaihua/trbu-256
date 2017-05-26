@@ -2,6 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
+
+	<select id="getAllCountByEmp" parameterType="map" resultType="long">
+		SELECT COUNT(*) FROM travel
+		<where>
+			(audit=1 OR audit=3) AND tid IN (
+				SELECT tid FROM travel_emp WHERE eid=#{eid})
+			<if test="column != null and keyWord != null">
+				AND ${column} LIKE #{keyWord}
+			</if>
+		</where>
+	</select>
+
+	<select id="findAllByEmp" parameterType="map" resultType="Travel">
+		SELECT tid,seid,aeid,iid,title,sdate,edate,subdate,dest,audit,note,auddate,anote,ecount,total
+		FROM travel
+		<where>
+			(audit=1 OR audit=3) AND tid IN (
+				SELECT tid FROM travel_emp WHERE eid=#{eid})
+			<if test="column != null and keyWord != null">
+				AND ${column} LIKE #{keyWord}
+			</if>
+		</where>
+		ORDER BY subdate DESC
+		LIMIT #{start},#{lineSize}
+	</select>
  
 	<select id="getAllCountPass" parameterType="map" resultType="long">
 		SELECT COUNT(*) FROM travel

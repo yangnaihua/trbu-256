@@ -41,6 +41,17 @@ public class TravelServiceBackImpl extends AbstractService
 	private ITypeDAO typeDAO;
 	
 	@Override
+	public Map<String, Object> listByEmp(String eid, long currentPage,
+			int lineSize, String column, String keyWord) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		Map<String,Object> param = super.handleParam(currentPage, lineSize, column, keyWord) ;
+		param.put("eid", eid) ;
+		map.put("allTravels", this.travelDAO.findAllByEmp(param)) ;
+		map.put("allRecorders", this.travelDAO.getAllCountByEmp(param)) ;
+		return map;
+	}
+	
+	@Override
 	public Map<String, Object> getDetailsShow(long tid) {
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		Travel travel = this.travelDAO.findById(tid) ;
