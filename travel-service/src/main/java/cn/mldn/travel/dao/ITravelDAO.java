@@ -9,6 +9,14 @@ import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface ITravelDAO extends IBaseDAO<Long, Travel> {
+	
+	/**
+	 * 进行出差单的审核处理操作
+	 * @param vo 审核信息
+	 * @return 成功返回true
+	 */
+	public boolean doUpdateAudit(Travel vo) ;
+	
 	/**
 	 * 统计指定状态下的数据量
 	 * @param param 包含有如下内容：<br>

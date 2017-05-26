@@ -11,6 +11,12 @@ import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
+	/**
+	 * 进行出差申请单的审核处理操作
+	 * @param vo 申请单的更新信息
+	 * @return 成功返回true
+	 */
+	public boolean editAudti(Travel vo) ;
 	
 	/**
 	 * 查看一个出产申请的详情信息

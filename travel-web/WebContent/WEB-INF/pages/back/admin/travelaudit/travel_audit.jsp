@@ -63,7 +63,7 @@
 							<fieldset>
 								<div class="form-group" id="auditDiv">
 									<!-- 定义表单提示文字 -->
-									<label class="col-md-3 control-label" for="destination">审核结论：</label>
+									<label class="col-md-3 control-label" for="audit">审核结论：</label>
 									<div class="col-md-5">
 										<div class="radio-inline">
 											<label><input type="radio" id="audit" name="audit" value="2" checked>
@@ -80,17 +80,18 @@
 								<!-- 定义输入表单样式，其中id主要用于设置颜色样式 -->
 								<div class="form-group" id="noteDiv">
 									<!-- 定义表单提示文字 -->
-									<label class="col-md-3 control-label" for="note">审核备注：</label>
+									<label class="col-md-3 control-label" for="anote">审核备注：</label>
 									<div class="col-md-5">
 										<!-- 定义表单输入组件 -->
-										<textarea id="note" name="note" rows="3"
+										<textarea id="anote" name="anote" rows="3"
 											class="form-control" placeholder="请输入审核所给出的意见信息" rows="10"></textarea>
 									</div>
 									<!-- 定义表单错误提示显示元素 -->
-									<div class="col-md-4" id="noteMsg"></div>
+									<div class="col-md-4" id="anoteMsg"></div>
 								</div> 
 								<div class="form-group">
 									<div class="col-md-5 col-md-offset-3">
+										<input type="hidden" name="tid" id="tid" value="${param.tid}">
 										<button type="submit" class="btn btn-primary">审核处理</button>
 										<button type="reset" class="btn btn-warning">重置</button>
 									</div>

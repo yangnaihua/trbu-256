@@ -35,7 +35,7 @@ $(function(){
 			"audit" : {
 				required : true,
 			},
-			"note" : {
+			"anote" : {
 				required : true
 			}
 		}

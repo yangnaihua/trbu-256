@@ -40,6 +40,12 @@ public class TravelServiceBackImpl extends AbstractService
 	private ITypeDAO typeDAO;
 	
 	@Override
+	public boolean editAudti(Travel vo) {
+		vo.setAuddate(new Date()); 	// 审核日期为今天
+		return this.travelDAO.doUpdateAudit(vo);
+	}
+	
+	@Override
 	public Map<String, Object> getDetailsAudit(long tid) {
 		Map<String,Object> map = new HashMap<String,Object>() ;
 		Travel travel = this.travelDAO.findById(tid) ;
