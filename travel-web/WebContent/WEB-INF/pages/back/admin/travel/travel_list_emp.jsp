@@ -45,7 +45,7 @@
 										</c:if>	
 									</td>
 									<td class="text-center">
-										<span id="showBtn-${trv.tid}">${trv.title}</span>
+										<span id="showBtn-${trv.tid}" onmouseover="this.style.cursor='hand'">${trv.title}</span>
 									</td>
 									<td class="text-center"><fmt:formatDate value="${trv.sdate}" pattern="yyyy-MM-dd"/></td>
 									<td class="text-center"><fmt:formatDate value="${trv.edate}" pattern="yyyy-MM-dd"/></td>

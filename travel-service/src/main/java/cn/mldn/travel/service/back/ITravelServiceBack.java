@@ -11,6 +11,17 @@ import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
+	/**
+	 * 要取得指定出差的所有雇员信息
+	 * @param tid 出差编号
+	 * @return 包含有如下数据返回：<br>
+	 * 1、key = allEmps、value = 全部的出差员工信息；<br>
+	 * 2、key = allDepts、value = 所有的部门信息；<br>
+	 * 3、key = allLevels、value = 所有级别；<br>
+ 	 */
+	@RequiresRoles(value = {"travel"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travel:self"}, logical = Logical.OR)
+	public Map<String,Object> getTravelEmp(long tid) ;
 	
 	/**
 	 * 取得指定雇员的所有出差信息 
