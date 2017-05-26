@@ -92,7 +92,7 @@
 
 	<update id="doUpdateSubmit" parameterType="Travel">
 		UPDATE travel SET subdate=#{subdate},audit=#{audit},ecount=#{ecount},total=#{total}
-		WHERE tid=#{tid} AND audit=9 ;
+		WHERE tid=#{tid} AND audit=9 OR audit=2 ;
 	</update>
 
 	<select id="findTravelByCost" parameterType="long" resultType="Travel">
@@ -136,7 +136,7 @@
 	
 	<update id="doUpdate" parameterType="Travel">
 		UPDATE travel SET title=#{title},iid=#{iid},sdate=#{sdate},edate=#{edate},dest=#{dest},note=#{note}
-		WHERE tid=#{tid} AND seid=#{seid} AND audit=9
+		WHERE tid=#{tid} AND seid=#{seid} AND audit=9 OR audit=2
 	</update>
 
 	<select id="findAllSplit" parameterType="map" resultType="Travel">

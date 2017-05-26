@@ -46,10 +46,14 @@ public class EmpServiceBackImpl extends AbstractService
 		List<Emp> allEmp = this.empDAO.findAllByIds(eids.toArray());
 		// 2、遍历出所有要进行删除的数据信息，检查是否存在有领导信息
 		Iterator<Emp> iter = allEmp.iterator();
+		int count = 0 ;
 		while (iter.hasNext()) {
 			Emp emp = iter.next();
 			emp.setIneid(heid); 	// 设置操作者的eid信息
 			if ("manager".equals(emp.getLid())) { // 该操作为领导
+				if (emp.getEid().equals(heid)) {
+					continue ;
+				}
 				if ("manager".equals(humanEmp.getLid())) {
 					Dept dept = new Dept();
 					dept.setDid(emp.getDid()); // 当前雇员所在的部门
@@ -67,8 +71,9 @@ public class EmpServiceBackImpl extends AbstractService
 				emp.setLocked(2); // 逻辑删除位
 				this.empDAO.doUpdateLocked(emp);
 			}
+			count ++ ;
 		}
-		return true;
+		return eids.size() == count;
 	}
 
 	@Override
@@ -86,6 +91,9 @@ public class EmpServiceBackImpl extends AbstractService
 		Emp humanEmp = this.empDAO.findById(vo.getIneid());
 		// 如果现在要修改的雇员信息原本为经理，而且当前的修改者的级别不是经理，那么不能够修改
 		Emp oldEmp = this.empDAO.findById(vo.getEid()); // 取得原始数据信息
+		if (oldEmp.getEid().equals(humanEmp.getEid())) {	// 自己不能够修改自己
+			return false ;
+		}
 		if ("manager".equals(oldEmp.getLid())) { // 如果其原本是一个经理
 			if (!"manager".equals(humanEmp.getLid())) { // 修改者不是经理
 				// 应该抛出一个异常，表示没有足够的级别

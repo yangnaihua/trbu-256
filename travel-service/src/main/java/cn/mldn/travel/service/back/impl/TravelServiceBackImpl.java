@@ -248,7 +248,7 @@ public class TravelServiceBackImpl extends AbstractService
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("allItems", this.itemDAO.findAll());
 		Travel travel = this.travelDAO.findById(tid);
-		if (travel.getAudit().equals(9)) {
+		if (travel.getAudit().equals(9) || travel.getAudit().equals(2)) {
 			map.put("travel", travel);
 		}
 		return map;

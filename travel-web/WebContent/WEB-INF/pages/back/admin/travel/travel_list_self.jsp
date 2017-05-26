@@ -71,7 +71,7 @@
 									<td class="text-center">${trv.ecount}</td>
 									<td class="text-center">￥${trv.total}</td>
 									<td class="text-center">
-										<c:if test="${trv.audit==9}">
+										<c:if test="${trv.audit==9 || trv.audit==2}">
 											<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_SUBMIT_URL%>?tid=${trv.tid}">
 												<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;提交申请</a>
 											<a type="button" class="btn btn-warning btn-xs" href="<%=TRAVEL_USER_URL%>?tid=${trv.tid}">
