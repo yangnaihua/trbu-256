@@ -1,5 +1,10 @@
 package cn.mldn.travel.action.back;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.mldn.travel.service.back.ITravelServiceBack;
+import cn.mldn.travel.vo.Dept;
+import cn.mldn.travel.vo.Level;
+import cn.mldn.travel.vo.Type;
+import cn.mldn.util.ListToMapUtils;
 import cn.mldn.util.action.abs.AbstractBaseAction;
 import cn.mldn.util.split.ActionSplitPageUtil;
 
@@ -49,9 +58,16 @@ public class TravelAuditActionBack extends AbstractBaseAction {
 	@RequiresUser
 	@RequiresRoles(value = {"travelaudit"}, logical = Logical.OR)
 	@RequiresPermissions(value = {"travelaudit:handle"}, logical = Logical.OR)
-	public ModelAndView handlePre() {
+	public ModelAndView handlePre(long tid) {
 		ModelAndView mav = new ModelAndView(
 				super.getUrl("travelaudit.handle.page"));
+		Map<String,Object> map = this.travelServiceBack.getDetailsAudit(tid) ;
+		System.out.println(map);
+		mav.addAllObjects(map) ;
+		mav.addObject("allDepts", new ListToMapUtils<Long,String>("did", "dname").converter((List<Dept>) map.get("allDepts"))) ;
+		mav.addObject("allItems", new ListToMapUtils<Long,String>("iid", "title").converter((List<Dept>) map.get("allItems"))) ;
+		mav.addObject("allLevels", new ListToMapUtils<String,String>("lid", "title").converter((List<Dept>) map.get("allLevels"))) ;
+		mav.addObject("allTypes", new ListToMapUtils<Long,String>("tpid", "title").converter((List<Dept>) map.get("allTypes"))) ;
 		return mav;
 	}
 

@@ -11,6 +11,21 @@ import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
+	
+	/**
+	 * 查看一个出产申请的详情信息
+	 * @param tid 出差编号
+	 * @return 返回有如下的信息内容：<br>
+	 * 1、key = allLevels、value = 所有的级别信息；<br>
+	 * 2、key = allDepts、value = 所有的部门信息；<br>
+	 * 3、key = allEmps、value = 所有的出差人员的信息；<br>
+	 * 4、key = allCosts、value = 所有的出差费用信息；<br>
+	 * 5、key = travel、value = 出差单信息。<br>
+	 * 6、key = allTypes、value = 所有的差旅费用分类；<br>
+	 * 7、key = allItems、value = 全部出差类型。
+	 */
+	public Map<String,Object> getDetailsAudit(long tid) ;
+	
 	/**
 	 * 进行所有待审核的出差单列表
 	 * @param currentPage 当前页

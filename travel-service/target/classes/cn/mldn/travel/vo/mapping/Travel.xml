@@ -70,7 +70,7 @@
 	</delete>
 
 	<select id="findById" parameterType="long" resultType="Travel">
-		SELECT tid,seid,iid,title,sdate,edate,dest,audit,note,ecount,total,subdate,auddate,anote,aeid
+		SELECT tid,seid,aeid,iid,title,sdate,edate,subdate,dest,audit,note,auddate,anote,ecount,total
 		FROM travel WHERE tid=#{tid}
 	</select>
 	
