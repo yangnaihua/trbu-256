@@ -1,5 +1,7 @@
 package cn.mldn.travel.action.back;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.mldn.travel.service.back.ITravelServiceBack;
 import cn.mldn.travel.vo.Dept;
+import cn.mldn.travel.vo.Emp;
 import cn.mldn.travel.vo.Travel;
 import cn.mldn.util.ListToMapUtils;
 import cn.mldn.util.action.abs.AbstractBaseAction;
@@ -35,6 +38,21 @@ public class TravelAuditActionBack extends AbstractBaseAction {
 	public ModelAndView list(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(
 				super.getUrl("travelaudit.list.page"));
+		ActionSplitPageUtil aspu = new ActionSplitPageUtil(request,
+				"申请标题:title", super.getMsg("travelaudit.prepare.action"));
+		Map<String, Object> map = this.travelServiceBack.listPass(
+				aspu.getCurrentPage(), aspu.getLineSize(), aspu.getColumn(),
+				aspu.getKeyWord());
+		Map<String,Object> empMap = new HashMap<String,Object>() ;
+		Iterator<Emp> iterEmp = ((List<Emp>)map.get("allEmps")).iterator() ;
+		while (iterEmp.hasNext()) {
+			Emp emp = iterEmp.next() ;
+			empMap.put(emp.getEid(), emp) ;	// 方便比对
+		}
+		mav.addAllObjects(map) ;
+		mav.addObject("allEmps", empMap) ;
+		mav.addObject("allDepts", new ListToMapUtils<Long, String>("did", "dname")
+				.converter((List<Dept>) map.get("allDepts"))) ;
 		return mav;
 	}
 
@@ -84,7 +102,7 @@ public class TravelAuditActionBack extends AbstractBaseAction {
 	@RequiresPermissions(value = {"travelaudit:handle"}, logical = Logical.OR)
 	public ModelAndView handle(HttpServletRequest request, Travel vo) {
 		ModelAndView mav = new ModelAndView(super.getUrl("back.forward.page"));
-		vo.setAeid(super.getEid()); 
+		vo.setAeid(super.getEid());
 		if (this.travelServiceBack.editAudti(vo)) {
 			super.setUrlAndMsg(request, "travelaudit.prepare.action",
 					"travelaudit.handle.success");

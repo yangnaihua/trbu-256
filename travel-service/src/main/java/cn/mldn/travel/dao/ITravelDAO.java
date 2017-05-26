@@ -9,6 +9,24 @@ import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface ITravelDAO extends IBaseDAO<Long, Travel> {
+	/**
+	 * 统计通过的出差申请数据量
+	 * @param param 包含有如下内容：<br>
+	 * 1、key = column、value = 模糊查询列；<br>
+	 * 2、key = keyWord、value = 查询关键字；<br>
+	 * @return 统计量
+	 */
+	public Long getAllCountPass(Map<String,Object> param) ;
+	/**
+	 * 查找所有通过的出差单信息
+	 * @param param 包含有如下内容：<br>
+	 * 1、key = start、value = 开始行；<br>
+	 * 2、key = lineSize、value = 每页长度；<br>
+	 * 3、key = column、value = 模糊查询列；<br>
+	 * 4、key = keyWord、value = 查询关键字；<br>
+	 * @return 差旅信息
+	 */
+	public List<Travel> findAllPass(Map<String,Object> param) ;
 	
 	/**
 	 * 进行出差单的审核处理操作

@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.IEmpDAO">
+
+	<select id="findAllByIds2" resultType="Emp">
+		SELECT eid,ename,did FROM emp 
+		<where>
+			eid IN 
+			<foreach collection="array" open="(" close=")" separator="," item="myeid">
+				#{myeid}
+			</foreach>
+		</where>
+	</select>	
 	
 
 	<select id="findTravelById" parameterType="map" resultType="Emp">

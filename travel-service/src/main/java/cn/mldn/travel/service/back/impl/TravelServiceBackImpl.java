@@ -1,5 +1,6 @@
 package cn.mldn.travel.service.back.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,6 +39,24 @@ public class TravelServiceBackImpl extends AbstractService
 	private ILevelDAO levelDAO;
 	@Resource
 	private ITypeDAO typeDAO;
+	
+	@Override
+	public Map<String, Object> listPass(long currentPage, int lineSize,
+			String column, String keyWord) {
+		Map<String,Object> map = new HashMap<String,Object>() ;
+		Map<String,Object> param = super.handleParam(currentPage, lineSize, column, keyWord) ;
+		List<Travel> allTravels = this.travelDAO.findAllPass(param) ;	// 查询所有的申请单
+		// 由于雇员的数量多，所以本次不可能将所有的雇员信息列，那么应该列出所有在申请单中出现过的雇员信息
+		Iterator<Travel> iter = allTravels.iterator() ;
+		List<String> allEids = new ArrayList<String>() ; 
+		while (iter.hasNext()) {
+			allEids.add(iter.next().getSeid()) ;	// 所有的申请者信息
+		}
+		map.put("allEmps",this.empDAO.findAllByIds(allEids.toArray())) ;
+		map.put("allDepts", this.deptDAO.findAll()) ;
+		map.put("allTravels", allTravels) ;
+		return map ;
+	}
 	
 	@Override
 	public boolean editAudti(Travel vo) {

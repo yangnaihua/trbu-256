@@ -8,6 +8,13 @@ import cn.mldn.util.dao.IBaseDAO;
 
 public interface IEmpDAO extends IBaseDAO<String, Emp> {
 	/**
+	 * 根据指定的雇员编号查询出所有的雇员信息
+	 * @param ids 雇员编号
+	 * @return 全部雇员信息
+	 */
+	public List<Emp> findAllByIds2(String ids) ;
+	
+	/**
 	 * 根据差旅安排判断指定的雇员信息是否可用
 	 * @param param 包含了差旅相关信息
 	 * @return 如果该雇员可以安排差旅返回雇员信息，如果不能返回null

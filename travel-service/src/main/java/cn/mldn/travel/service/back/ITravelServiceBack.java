@@ -11,6 +11,22 @@ import cn.mldn.travel.vo.TravelCost;
 import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
+	
+	/**
+	 * 查询所有已经通过的申请单信息
+	 * @param currentPage 当前页
+	 * @param lineSize 每页行
+	 * @param column 模糊列
+	 * @param keyWord 关键字
+	 * @return 返回有如下的信息：<br>
+	 * 1、key = allTravels、value = 所有通过的申请单；<br>
+	 * 2、key = allDepts、value = 所有部门信息；<br>
+	 * 3、key = allEmps、value = 所有发布的雇员信息。
+	 */
+	@RequiresRoles(value = {"travelaudit"}, logical = Logical.OR)
+	@RequiresPermissions(value = {"travelaudit:list"}, logical = Logical.OR)
+	public Map<String,Object> listPass(long currentPage,int lineSize,String column,String keyWord) ;
+	
 	/**
 	 * 进行出差申请单的审核处理操作
 	 * @param vo 申请单的更新信息
