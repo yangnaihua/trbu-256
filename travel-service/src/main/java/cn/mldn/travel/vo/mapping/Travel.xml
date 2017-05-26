@@ -3,6 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.mldn.travel.dao.ITravelDAO">
 
+	<update id="doUpdateAuditTask" parameterType="date">
+		UPDATE travel SET audit=3
+		WHERE audit=1 AND edate&lt;#{date}
+	</update>
+
 	<select id="getAllCountByEmp" parameterType="map" resultType="long">
 		SELECT COUNT(*) FROM travel
 		<where>

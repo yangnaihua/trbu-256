@@ -1,5 +1,6 @@
 package cn.mldn.travel.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,13 @@ import cn.mldn.travel.vo.TravelEmp;
 import cn.mldn.util.dao.IBaseDAO;
 
 public interface ITravelDAO extends IBaseDAO<Long, Travel> {
+	/**
+	 * 根据指定的日期更新差旅的状态
+	 * @param currentDate 当前日期
+	 * @return 更新成功返回true
+	 */
+	public boolean doUpdateAuditTask(Date currentDate) ;
+	
 	/**
 	 * 根据雇员编号查找出其所对应的所有出差信息
 	 * @param param 包含有如下内容：<br>

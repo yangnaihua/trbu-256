@@ -12,6 +12,12 @@ import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
 	/**
+	 * 进行定时调度更新
+	 * @return 更新结果
+	 */
+	public boolean editTask() ;
+	
+	/**
 	 * 要取得指定出差的所有雇员信息
 	 * @param tid 出差编号
 	 * @return 包含有如下数据返回：<br>

@@ -39,6 +39,11 @@ public class TravelServiceBackImpl extends AbstractService
 	private ILevelDAO levelDAO;
 	@Resource
 	private ITypeDAO typeDAO;
+
+	@Override
+	public boolean editTask() {
+		return this.travelDAO.doUpdateAuditTask(new Date());
+	}
 	
 	@Override
 	public Map<String, Object> getTravelEmp(long tid) {
