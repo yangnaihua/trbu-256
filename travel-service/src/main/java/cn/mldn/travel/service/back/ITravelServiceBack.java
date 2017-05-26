@@ -12,6 +12,20 @@ import cn.mldn.travel.vo.TravelEmp;
 
 public interface ITravelServiceBack {
 	/**
+	 * 进行所有待审核的出差单列表
+	 * @param currentPage 当前页
+	 * @param lineSize 每页行
+	 * @param column 模糊列
+	 * @param keyWord 关键字
+	 * @return 包含有如下的返回信息：<br>
+	 * 1、key = allTravels、value = 全部的申请单；<br>
+	 * 2、key = allRecorders、value = 全部等待的申请单数量。
+	 */
+	@RequiresRoles(value = { "travelaudit" }, logical = Logical.OR)
+	@RequiresPermissions(value = { "travelaudit:list" }, logical = Logical.OR)
+	public Map<String,Object> listPrepare(long currentPage,int lineSize,String column,String keyWord) ;
+	
+	/**
 	 * 进行出差单的申请提交，该提交要执行如下处理：<br>
 	 * 1、要根据tid取得全部出差的雇员信息，目的是为了统计出个数；
 	 * 2、要查询全部的出差费用信息，进行费用的计算；

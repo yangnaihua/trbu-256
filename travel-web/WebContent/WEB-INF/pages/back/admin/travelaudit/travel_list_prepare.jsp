@@ -39,51 +39,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr id="travel-1">
-								<td class="text-center"><span class="text-danger"><span class="glyphicon glyphicon-flag"></span>&nbsp;已完成</span></td>
-								<td class="text-center">
-									XX公司CRM项目
-								</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">20人</td>
-								<td class="text-center">￥8923.23</td>
-								<td class="text-center">
-									<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_AUDIT_URL%>">
-										<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;处理申请</a>
-								</td>
-							</tr> 
-							<tr id="travel-2">
-								<td class="text-center"><span class="text-warning"><span class="glyphicon glyphicon-flag"></span>&nbsp;进行中</span></td>
-								<td class="text-center">
-									XX公司CRM项目
-								</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">20人</td>
-								<td class="text-center">￥8923.23</td>
-								<td class="text-center">
-									<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_AUDIT_URL%>">
-										<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;处理申请</a>
-								</td>
-							</tr> 
-							<tr id="travel-3">
-								<td class="text-center"><span class="text-primary"><span class="glyphicon glyphicon-flag"></span>&nbsp;待提交</span></td>
-								<td class="text-center">
-									XX公司CRM项目
-								</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">2018-10-10</td>
-								<td class="text-center">20人</td>
-								<td class="text-center">￥8923.23</td>
-								<td class="text-center">
-									<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_AUDIT_URL%>">
-										<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;处理申请</a>
-								</td>
-							</tr> 
+							<c:forEach items="${allTravels}" var="trv">
+								<tr id="travel-${trv.tid}">
+									<td class="text-center"><span class="text-warning"><span class="glyphicon glyphicon-flag"></span>&nbsp;待审核</span></td>
+									<td class="text-center">
+										${trv.title}
+									</td>
+									<td class="text-center"><fmt:formatDate value="${trv.subdate}" pattern="yyyy-MM-dd"/></td>
+									<td class="text-center"><fmt:formatDate value="${trv.sdate}" pattern="yyyy-MM-dd"/></td>
+									<td class="text-center"><fmt:formatDate value="${trv.edate}" pattern="yyyy-MM-dd"/></td>
+									<td class="text-center">${trv.ecount}人</td>
+									<td class="text-center">￥${trv.total}</td>
+									<td class="text-center">
+										<a type="button" class="btn btn-primary btn-xs" href="<%=TRAVEL_AUDIT_URL%>?tid=${trv.tid}">
+											<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;处理申请</a>
+									</td>
+								</tr> 
+							</c:forEach>
 						</tbody>
 					</table>
 					<div id="splitBarDiv" style="float:right">
